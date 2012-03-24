@@ -44,4 +44,5 @@ RSpec.configure do |config|
   end
 end
 
+require 'telasi'
 require 'factories/sys/user'

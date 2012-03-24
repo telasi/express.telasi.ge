@@ -19,7 +19,7 @@ module Sys
     index :email
     index :first_name
     index :last_name
-    
+
     before_create :user_before_create
 
     def password
