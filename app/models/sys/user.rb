@@ -11,9 +11,15 @@ module Sys
     field :hashed_password, type: String
     field :first_name, type: String
     field :last_name, type: String
+
     validates_presence_of :email, :mobile
     validates_uniqueness_of :email
     validates_presence_of :first_name, :last_name
+
+    index :email
+    index :first_name
+    index :last_name
+    
     before_create :user_before_create
 
     def password
