@@ -17,6 +17,7 @@ describe Sys::User do
   it { should validate_presence_of :mobile }
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
+  it { should have_and_belong_to_many(:roles) }
 end
 
 describe 'მომხმარებლის შექმნა' do
