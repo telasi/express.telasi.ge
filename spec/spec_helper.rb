@@ -43,3 +43,5 @@ RSpec.configure do |config|
     Mongoid.master.collections.each(&:remove)
   end
 end
+
+require 'factories/sys/user'
