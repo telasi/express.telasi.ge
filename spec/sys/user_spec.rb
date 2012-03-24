@@ -34,5 +34,24 @@ describe 'მომხმარებლის შექმნა' do
     before(:all) do
       @user = FactoryGirl.create('sys/user', :mobile => '(595)335588', :email => 'dimakura@gmail.com')
     end
+    subject { @user }
+    its(:admin) { should == false }
+  end
+end
+
+describe 'მომხმარებლის ავტორიზაცია' do
+  before(:all) do
+    FactoryGirl.create('sys/user', :email => 'dimitri@c12.ge', :password => 'secret')
+  end
+  context 'სწორი პაროლით' do
+    before(:all) { @user = User.authenticate('dimitri@c12.ge', 'secret') }
+    subject { @user }
+    it { should_not be_nil }
+    its(:email) { should == 'dimitri@c12.ge' }
+  end
+  context 'არასწორო პაროლით' do
+    before(:all) { @user = User.authenticate('dimitri@c12.ge', 'wrong_password') }
+    subject { @user }
+    it { should be_nil }
   end
 end
