@@ -39,13 +39,13 @@ module Sys
     private
 
     def mobile_format
-      if self.mobile and not User.correct_mobile?(self.mobile)
+      if self.mobile and not Sys.correct_mobile?(self.mobile)
         errors.add(:mobile, 'არასწორი მობილური') 
       end
     end
 
     def email_format
-      if self.email and not User.correct_email?(self.email)
+      if self.email and not Sys.correct_email?(self.email)
         errors.add(:email, 'არასწორი ელ. ფოსტა')
       end
     end

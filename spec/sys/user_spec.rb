@@ -19,11 +19,20 @@ describe Sys::User do
   it { should validate_presence_of :last_name }
 end
 
-describe 'პირველი მომხმარებლის შექმნა' do
+describe 'მომხმარებლის შექმნა' do
   before(:all) do
-    @user = FactoryGirl.create('sys/user', :mobile => '(595)335514')
+    @admin = FactoryGirl.create('sys/user', :mobile => '(595)335514', :email => 'dimitri@c12.ge')
   end
-  subject { @user }
+  subject { @admin }
   its(:admin) { should == true }
   its(:mobile) { should == '595335514' }
+  its(:salt) { should_not be_nil }
+  its(:salt) { should_not be_empty }
+  its(:hashed_password) { should_not be_nil }
+  its(:hashed_password) { should_not be_empty }
+  context 'მეორე მომხმარებლის დამატება' do
+    before(:all) do
+      @user = FactoryGirl.create('sys/user', :mobile => '(595)335588', :email => 'dimakura@gmail.com')
+    end
+  end
 end
