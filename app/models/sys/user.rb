@@ -15,6 +15,8 @@ module Sys
     validates_presence_of :email, :mobile
     validates_uniqueness_of :email
     validates_presence_of :first_name, :last_name
+    validate :mobile_format, :email_format
+    validate :password_presence
 
     index :email
     index :first_name
@@ -35,6 +37,24 @@ module Sys
     end
 
     private
+
+    def mobile_format
+      if self.mobile and not User.correct_mobile?(self.mobile)
+        errors.add(:mobile, 'არასწორი მობილური') 
+      end
+    end
+
+    def email_format
+      if self.email and not User.correct_email?(self.email)
+        errors.add(:email, 'არასწორი ელ. ფოსტა')
+      end
+    end
+
+    def password_presence
+      if self.hashed_password.nil? and self.password.nil?
+        errors.add(:password, 'ჩაწერეთ პაროლი')
+      end
+    end
 
     def user_before_create
       first = User.count == 0
