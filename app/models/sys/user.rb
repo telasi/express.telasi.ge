@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+require 'telasi'
+
 module Sys
   class User
     include Mongoid::Document
@@ -11,10 +13,12 @@ module Sys
     field :first_name, type: String
     field :last_name, type: String
     has_and_belongs_to_many :roles, :class_name => 'Sys::Role'
+    #attr_accessor :passwrod_confirmation
 
     validates_presence_of :email, :mobile
     validates_uniqueness_of :email
     validates_presence_of :first_name, :last_name
+    #validates_confirmation_of :password
     validate :mobile_format, :email_format
     validate :password_presence
 
@@ -39,6 +43,10 @@ module Sys
         self.salt = "salt#{rand 100}#{Time.now}"
         self.hashed_password = Digest::SHA1.hexdigest("#{pwd}dimitri#{salt}")
       end
+    end
+
+    def full_name
+      "#{self.first_name} #{self.last_name}"
     end
 
     private

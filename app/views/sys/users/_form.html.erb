@@ -1,0 +1,12 @@
+<%= simple_form_for(@user, :url => sys_new_user_url, :html => {:class => 'form-horizontal'}) do |f| -%>
+  <%= f.input :email, :label => 'ელ. ფოსტა', :input_html => {:autofocus => true} %>
+  <%= f.input :password, :label => 'პაროლი' %>
+  <%= f.input :password_confirmation, :label => 'დადასტურება' %>
+  <%= f.input :mobile, :label => 'მობილური' %>
+  <%= f.input :first_name, :label => 'სახელი' %>
+  <%= f.input :last_name, :label => 'გვარი' %>
+  <%= f.input :admin, :as => :boolean, :label => 'სისადმინია?' %>
+  <div class="form-actions">
+  	<%= f.button :submit, 'შენახვა', :class => ['btn-primary'] %>
+  </div>
+<% end -%>

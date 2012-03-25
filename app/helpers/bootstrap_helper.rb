@@ -11,6 +11,6 @@ module BootstrapHelper
     icon_name = "icon-#{icn}"
     icon_name += " icon-white" if opts[:white] 
     tooltip = opts[:tooltip] ? %Q{rel="tooltip" data-original-title="#{opts[:tooltip]}"} : nil
-    %Q{<span #{tooltip}><i class="#{icon_name}"></i> #{txt}</span>}.strip.html_safe
+    %Q{<i class="#{icon_name}" #{tooltip}></i> #{txt}}.strip.html_safe
   end
 end

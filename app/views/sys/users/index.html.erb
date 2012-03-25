@@ -4,7 +4,7 @@
 <div class="btn-toolbar">
 <%= link_to 'ახალი მომხმარებელი', sys_new_user_url, :class => ['btn'] %>
 </div>
-<table class="table table-bordered table-stripped">
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>ელ.ფოსტა</th>
@@ -13,4 +13,17 @@
       <th width="50" class="center"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
     </tr>
   </thead>
+  <tbody>
+    <% @users.each do |user| -%>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.full_name %></td>
+        <td><%= user.mobile %></td>
+        <td class="center">
+          <%= link_to icon_text('pencil', nil, :tooltip => 'რედაქტირება'), sys_edit_user_url(user) -%>
+          <%= link_to icon_text('trash', nil, :tooltip => 'წაშლა'), sys_delete_user_url(user), :method => :delete, :confirm => 'ნამდვილად?' -%>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
 </table>
