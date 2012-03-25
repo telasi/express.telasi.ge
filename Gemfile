@@ -4,6 +4,7 @@ gem 'rails', '3.2.2'
 gem 'simple_form', '~> 2.0.0'
 gem 'mongoid', '~> 2.4'
 gem 'bson_ext', '~> 1.5'
+gem 'haml'
 
 gem 'sqlite3'
 

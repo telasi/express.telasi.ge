@@ -1,0 +1,16 @@
+<div class="page-header">
+  <h2>მომხმარებლები <small>და მათი მართვა</small></h2>
+</div>
+<div class="btn-toolbar">
+<%= link_to 'ახალი მომხმარებელი', sys_new_user_url, :class => ['btn'] %>
+</div>
+<table class="table table-bordered table-stripped">
+  <thead>
+    <tr>
+      <th>ელ.ფოსტა</th>
+      <th>სახელი, გვარი</th>
+      <th>მობილური</th>
+      <th width="50" class="center"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
+    </tr>
+  </thead>
+</table>

@@ -1,0 +1,13 @@
+= form_tag(login_url, :class => 'form-horizontal', :id => 'login-form') do |f|
+	%legend სისტემაში შესვლა
+	- if @error
+		= bootstrap_alert(:id => 'error-explanation', :class => :error) do
+			= @error
+	.control-group
+		.control-label= label_tag :email, 'ელ.ფოსტა'
+		.controls= text_field_tag :email, params[:email], :autofocus => true
+	.control-group
+		.control-label= label_tag :password, 'პაროლი'
+		.controls= password_field_tag :password, params[:password]
+	.form-actions
+		= submit_tag 'შესვლა', :class => ['btn', 'btn-primary']

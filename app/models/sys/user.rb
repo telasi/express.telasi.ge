@@ -1,5 +1,4 @@
 # -*- encoding : utf-8 -*-
-
 module Sys
   class User
     include Mongoid::Document
