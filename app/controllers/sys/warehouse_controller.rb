@@ -13,7 +13,7 @@ module Sys
         if @warehouse.valid?
           if @warehouse.sap_warehouse
             @warehouse.save!
-            redirect_to sys_warehouses_url, :notice => 'საწყობი შექმნილია'
+            redirect_to sys_warehouses_url, :notice => 'საწყობი შექმნილია.'
           else
             @error = 'შესაბამისი საწყობი ვერ მოიძებნა SAP-ში.'
           end
@@ -27,7 +27,7 @@ module Sys
       @title = 'საწყობის შეცვლა'
       @warehouse = Sys::Warehouse.find(params[:id])
       if request.put?
-        redirect_to sys_show_warehouse_url(@warehouse) if @warehouse.update_attributes(params[:sys_warehouse])
+        redirect_to sys_show_warehouse_url(@warehouse), :notice => 'საწყობი შეცვლილია.' if @warehouse.update_attributes(params[:sys_warehouse])
       end
     end
 
@@ -35,6 +35,12 @@ module Sys
       @warehouse = Sys::Warehouse.find(params[:id])
       @sap_warehouse = @warehouse.sap_warehouse
       @title = @warehouse.name
+    end
+
+    def delete
+      @warehouse = Sys::Warehouse.find(params[:id])
+      @warehouse.destroy
+      redirect_to sys_warehouses_url, :notice => 'საწყობი წაშლილია.'
     end
   end
 end

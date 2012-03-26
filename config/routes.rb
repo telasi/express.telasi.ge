@@ -15,11 +15,11 @@ ExpressTelasiGe::Application.routes.draw do
       delete '/delete/:id', :action => :delete, :as => :delete_user
     end
     scope 'warehouse', :controller => :warehouse do
-      get '/', :action => :index, :as => :warehouses
-      match '/new', :action => :new, :as => :new_warehouse
-      match '/edit/:id', :action => :edit, :as => :edit_warehouse
-      match '/show/:id', :action => :show, :as => :show_warehouse
-      match '/delete/:id', :action => :show, :as => :delete_warehouse
+      get    '/',           :action => :index,  :as => :warehouses
+      match  '/new',        :action => :new,    :as => :new_warehouse
+      match  '/edit/:id',   :action => :edit,   :as => :edit_warehouse
+      get    '/show/:id',   :action => :show,   :as => :show_warehouse
+      delete '/delete/:id', :action => :delete, :as => :delete_warehouse
     end
   end
 
