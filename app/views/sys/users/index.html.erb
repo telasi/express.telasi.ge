@@ -2,22 +2,24 @@
   <h2>მომხმარებლები <small>და მათი მართვა</small></h2>
 </div>
 <div class="btn-toolbar">
-<%= link_to 'ახალი მომხმარებელი', sys_new_user_url, :class => ['btn'] %>
+<%= link_to icon_text('plus', 'ახალი მომხმარებელი'), sys_new_user_url, :class => ['btn'] %>
 </div>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>ელ.ფოსტა</th>
+      <th width="16"></th>
       <th>სახელი, გვარი</th>
-      <th>მობილური</th>
+      <th width="200">ელ.ფოსტა</th>
+      <th width="200">მობილური</th>
       <th width="50" class="center"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| -%>
       <tr>
+        <td class="center"><%= icon_text('user', nil, :tooltip => 'სისადმინი') if user.admin %></td>
+        <td><%= link_to user.full_name, sys_show_user_url(user) %></td>
         <td><%= user.email %></td>
-        <td><%= user.full_name %></td>
         <td><%= user.mobile %></td>
         <td class="center">
           <%= link_to icon_text('pencil', nil, :tooltip => 'რედაქტირება'), sys_edit_user_url(user) -%>

@@ -9,6 +9,7 @@ ExpressTelasiGe::Application.routes.draw do
       get '/', :action => :index, :controller => :users, :as => :users
       match '/new', :action => :new, :controller => :users, :as => :new_user
       match '/edit/:id', :action => :edit, :controller => :users, :as => :edit_user
+      get '/show/:id', :action => :show, :controller => :users, :as => :show_user
       delete '/delete/:id', :action => :delete, :controller => :users, :as => :delete_user
     end
   end

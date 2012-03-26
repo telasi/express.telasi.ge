@@ -16,7 +16,14 @@ def incorrect_mobile(mob)
   end
 end
 
-describe 'მობილურის ფორმატის შემოწმება' do
+def check_mobile_format(mob, formatted)
+  context "#{mob} as #{formatted}" do
+    subject { formatted }
+    it { should == Sys.format_mobile(mob) }
+  end
+end
+
+describe 'მობილურის სისწორის შემოწმება' do
   correct_mobile '595335514'
   correct_mobile '599422451'
   correct_mobile '(595)335-514'
@@ -27,4 +34,9 @@ describe 'მობილურის ფორმატის შემოწ�
   incorrect_mobile '123'
   incorrect_mobile '5953355145'
   incorrect_mobile nil
+end
+
+describe 'მობილურის ფორმატის შემოწმება' do
+  check_mobile_format '595335514', '(595)335-514'
+  check_mobile_format '(595)33-55-14', '(595)335-514'
 end
