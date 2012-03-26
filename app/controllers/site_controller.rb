@@ -29,4 +29,12 @@ class SiteController < ApplicationController
       redirect_to home_url, :notice => 'თქვენი მონაცემები განახლებულია' if @user.update_attributes(params[:sys_user])
     end
   end
+
+  def password
+    @title = 'ანგარიშის მართვა'
+    @user = current_user
+    if request.put?
+      redirect_to home_url, :notice => 'თქვენი პაროლი შეცვლილია' if @user.update_attributes(params[:sys_user])
+    end
+  end
 end
