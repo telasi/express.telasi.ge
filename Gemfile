@@ -5,6 +5,7 @@ gem 'simple_form', '~> 2.0.0'
 gem 'mongoid', '~> 2.4'
 gem 'bson_ext', '~> 1.5'
 gem 'haml'
+gem 'c12-commons', '~> 0.0.5'
 
 gem 'sqlite3'
 

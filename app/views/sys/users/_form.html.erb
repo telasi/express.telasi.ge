@@ -1,4 +1,4 @@
-<%= simple_form_for(@user, :url => sys_new_user_url, :html => {:class => 'form-horizontal'}) do |f| -%>
+<%= simple_form_for(@user, :url => (@user.new? ? sys_new_user_url : sys_edit_user_url(@user)), :html => {:class => 'form-horizontal'}) do |f| -%>
   <%= f.input :email, :label => 'ელ. ფოსტა', :input_html => {:autofocus => true} %>
   <%= f.input :password, :label => 'პაროლი' %>
   <%= f.input :password_confirmation, :label => 'დადასტურება' %>

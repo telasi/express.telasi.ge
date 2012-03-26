@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require 'telasi'
+require 'c12-commons'
 
 module Sys
   class User
@@ -52,13 +52,13 @@ module Sys
     private
 
     def mobile_format
-      if self.mobile and not Sys.correct_mobile?(self.mobile)
+      if self.mobile and not C12.correct_mobile?(self.mobile)
         errors.add(:mobile, 'არასწორი მობილური') 
       end
     end
 
     def email_format
-      if self.email and not Sys.correct_email?(self.email)
+      if self.email and not C12.correct_email?(self.email)
         errors.add(:email, 'არასწორი ელ. ფოსტა')
       end
     end
@@ -72,7 +72,7 @@ module Sys
     def user_before_create
       first = User.count == 0
       self.admin = first
-      self.mobile = Sys.compact_mobile(self.mobile)
+      self.mobile = C12.compact_mobile(self.mobile)
     end
   end
 end
