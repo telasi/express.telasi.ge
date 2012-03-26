@@ -3,3 +3,9 @@
     <div class="container"><%= link_to 'sap.telasi.ge', home_url, :class => :brand %></div>
   </div>
 </div>
+<% if notice -%>
+  <div class="alert alert-block fade in">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= notice %>
+  </div>
+<% end -%>

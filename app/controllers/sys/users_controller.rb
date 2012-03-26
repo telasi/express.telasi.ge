@@ -10,7 +10,7 @@ module Sys
       @title = 'ახალი მომხმარებელი'
       if request.post?
         @user = Sys::User.new(params[:sys_user])
-        redirect_to sys_users_url if @user.save
+        redirect_to sys_users_url, :notice => 'მომხმარებელი შექმნილია.' if @user.save
       else
         @user = Sys::User.new
       end
@@ -20,7 +20,7 @@ module Sys
       @title = 'მომხმარებლის რედაქტირება'
       @user = User.find(params[:id])
       if request.put?
-        redirect_to sys_show_user_url(@user) if @user.update_attributes(params[:sys_user])
+        redirect_to sys_show_user_url(@user), :notice => 'მომხმარებელი განახლებულია.' if @user.update_attributes(params[:sys_user])
       end
     end
 
