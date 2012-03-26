@@ -1,6 +1,9 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <div class="container"><%= link_to 'sap.telasi.ge', home_url, :class => :brand %></div>
+    <div class="container">
+    	<%= link_to 'sap.telasi.ge', home_url, :class => :brand -%>
+	    <%= render :partial => 'layouts/user_menu' -%>
+    </div>
   </div>
 </div>
 <% if notice -%>

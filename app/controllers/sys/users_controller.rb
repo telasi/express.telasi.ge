@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Sys
-  class UsersController < ApplicationController
+  class UsersController < SysController
     def index
       @title = 'მომხმარებლები'
       @users = User.all.order_by(:email)

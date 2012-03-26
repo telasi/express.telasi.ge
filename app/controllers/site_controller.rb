@@ -16,4 +16,13 @@ class SiteController < ApplicationController
       end
     end
   end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to home_url
+  end
+
+  def account
+  end
+
 end
