@@ -8,6 +8,11 @@ module Sys
     field :werks
     field :lgort
 
+    validates_presence_of :name
+    validates_presence_of :address
+    validates_presence_of :werks
+    validates_presence_of :lgort
+
     index :name
     index [[:werks, Mongo::ASCENDING], [:lgort, Mongo::ASCENDING]]
 

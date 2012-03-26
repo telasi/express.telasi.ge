@@ -8,6 +8,10 @@ describe Sys::Warehouse do
   it { should have_field :address }
   it { should have_field :lgort }
   it { should have_field :werks }
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :address }
+  it { should validate_presence_of :lgort }
+  it { should validate_presence_of :werks }
 end
 
 describe 'SAP-ის საწყობის მიღება' do
