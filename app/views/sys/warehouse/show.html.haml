@@ -1,0 +1,8 @@
+.page-header
+	%h2
+		#{@warehouse.name}
+		%small= @warehouse.address
+.btn-toolbar
+	= link_to icon_text('arrow-left', 'სიაში'), sys_warehouses_url, :class => 'btn'
+	= link_to icon_text('pencil', 'შეცლა'), sys_edit_warehouse_url(@warehouse), :class => 'btn'
+	= link_to icon_text('trash',  'წაშლა'), sys_delete_warehouse_url(@warehouse), :class => 'btn', :method => :delete, :confirm => 'ნამდვილად გინდათ ამ საწყობის წაშლა?'

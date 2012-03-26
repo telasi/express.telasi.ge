@@ -13,4 +13,8 @@ module BootstrapHelper
     tooltip = opts[:tooltip] ? %Q{rel="tooltip" data-original-title="#{opts[:tooltip]}"} : nil
     %Q{<i class="#{icon_name}" #{tooltip}></i> #{txt}}.strip.html_safe
   end
+
+  def tooltiped_text(text, tooltip, placement = 'top')
+    %Q{<span rel="tooltip" data-original-title="#{tooltip}" data-placement="#{placement}">#{text}</span>}.html_safe
+  end
 end

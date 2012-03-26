@@ -1,0 +1,15 @@
+<%= simple_form_for(@warehouse, :url => (@warehouse.new? ? sys_new_warehouse_url : sys_edit_warehouse_url(@warehouse)), :html => {:class => 'form-horizontal'}) do |f| -%>
+  <% if @error -%>
+    <%= bootstrap_alert(:id => 'error-explanation', :class => :error) do -%>
+	  <%= @error %>
+	 <% end -%>
+  <% end -%>
+  <%= f.input :name, :label => 'დასახელება', :input_html => {:autofocus => :true} %>
+  <%= f.input :address, :label => 'მისამართი', :input_html => {:class => :span6} %>
+  <%= f.input :werks, :label => 'WERKS', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწარმოს კოდი SAP-ში' %>
+  <%= f.input :lgort, :label => 'LGORT', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწყობის კოდი SAP-ში' %>
+  <div class="form-actions">
+    <%= f.button :submit, 'შენახვა', :class => 'btn-primary' %>
+    <%= link_to 'გაუქმება', @warehouse.new? ? sys_warehouses_url : sys_show_warehouse_url(@warehouse), :class => 'btn' %>
+  </div>
+<% end -%>
