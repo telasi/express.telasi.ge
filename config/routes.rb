@@ -14,13 +14,6 @@ ExpressTelasiGe::Application.routes.draw do
       get '/show/:id',      :action => :show,   :as => :show_user
       delete '/delete/:id', :action => :delete, :as => :delete_user
     end
-    scope 'roles', :controller => :roles do
-      get '/',              :action => :index,  :as => :roles
-      match '/new',         :action => :new,    :as => :new_role
-      match '/edit/:id',    :action => :edit,   :as => :edit_role
-      get '/show/:id',      :action => :show,   :as => :show_role
-      delete '/delete/:id', :action => :delete, :as => :delete_role
-    end
   end
 
   root :to => 'site#index'

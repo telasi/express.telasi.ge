@@ -6,6 +6,9 @@ gem 'mongoid', '~> 2.4'
 gem 'bson_ext', '~> 1.5'
 gem 'haml'
 gem 'c12-commons', '~> 0.0.5'
+gem 'composite_primary_keys', '~> 5'
+gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
+gem 'ruby-oci8', '~> 2.1.0'
 
 gem 'sqlite3'
 

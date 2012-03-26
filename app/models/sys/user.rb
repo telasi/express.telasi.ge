@@ -12,8 +12,6 @@ module Sys
     field :hashed_password, type: String
     field :first_name, type: String
     field :last_name, type: String
-    has_and_belongs_to_many :roles, :class_name => 'Sys::Role'
-    #attr_accessor :passwrod_confirmation
 
     validates_presence_of :email, :mobile
     validates_uniqueness_of :email

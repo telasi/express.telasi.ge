@@ -1,8 +1,0 @@
-<%= simple_form_for(@role, :url => (@role.new? ? sys_new_role_url : sys_edit_role_url(@role)), :html => {:class => 'form-horizontal'}) do |f| -%>
-  <%= f.input :name, :label => 'დასახელება', :input_html => {:autofocus => true} %>
-  <%= f.input :description, :label => 'აღწერილობა', :input_html => {:class => :span8} %>
-  <div class="form-actions">
-  	<%= f.button :submit, @role.new? ? 'შექმნა' : 'შეცვლა', :class => 'btn-primary' %>
-  	<%= link_to 'გაუქმება', @role.new? ? sys_roles_url : sys_show_role_url(@role), :class => 'btn' %>
-  </div>
-<% end -%>
