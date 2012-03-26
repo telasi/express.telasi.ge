@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h2>როლები</h2>
+</div>
+<div class="btn-toolbar">
+  <%= link_to icon_text('plus', 'ახალი როლი'), sys_new_role_url, :class => 'btn' %>
+  <div class="pull-right">
+    <%= link_to icon_text('cog', 'მომხმარებლები'), sys_users_url, :class => 'btn' %>
+  </div>
+</div>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th width="200">დასახელება</th>
+      <th>აღწერილობა</th>
+      <th class="center" width="50"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @roles.each do |role| -%>
+      <tr>
+        <td><%= link_to role.name, sys_show_role_url(role) %></td>
+        <td><%= role.description %></td>
+        <td class="center">
+          <%= link_to icon_text('pencil', nil, :tooltip => 'შეცვლა'), sys_edit_role_url(role) %>
+          <%= link_to icon_text('trash', nil, :tooltip => 'წაშლა'), sys_delete_role_url(role), :method => :delete, :confirm => 'ნამდვილად გინდათ ამ როლის წაშლა?' %>
+        </td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>

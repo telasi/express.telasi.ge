@@ -7,12 +7,19 @@ ExpressTelasiGe::Application.routes.draw do
   match '/password', :controller => :site, :action => :password
 
   namespace 'sys' do
-    scope 'users' do
-      get '/', :action => :index, :controller => :users, :as => :users
-      match '/new', :action => :new, :controller => :users, :as => :new_user
-      match '/edit/:id', :action => :edit, :controller => :users, :as => :edit_user
-      get '/show/:id', :action => :show, :controller => :users, :as => :show_user
-      delete '/delete/:id', :action => :delete, :controller => :users, :as => :delete_user
+    scope 'users', :controller => :users do
+      get '/',              :action => :index,  :as => :users
+      match '/new',         :action => :new,    :as => :new_user
+      match '/edit/:id',    :action => :edit,   :as => :edit_user
+      get '/show/:id',      :action => :show,   :as => :show_user
+      delete '/delete/:id', :action => :delete, :as => :delete_user
+    end
+    scope 'roles', :controller => :roles do
+      get '/',              :action => :index,  :as => :roles
+      match '/new',         :action => :new,    :as => :new_role
+      match '/edit/:id',    :action => :edit,   :as => :edit_role
+      get '/show/:id',      :action => :show,   :as => :show_role
+      delete '/delete/:id', :action => :delete, :as => :delete_role
     end
   end
 

@@ -1,5 +1,6 @@
+.page-header
+	%h2 სისტემაში შესვლა
 = form_tag(login_url, :class => 'form-horizontal', :id => 'login-form') do |f|
-	%legend სისტემაში შესვლა
 	- if @error
 		= bootstrap_alert(:id => 'error-explanation', :class => :error) do
 			= @error

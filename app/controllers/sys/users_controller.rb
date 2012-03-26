@@ -3,7 +3,7 @@ module Sys
   class UsersController < SysController
     def index
       @title = 'მომხმარებლები'
-      @users = User.all.order_by(:email)
+      @users = User.all.asc(:first_name, :last_name)
     end
 
     def new
@@ -32,7 +32,7 @@ module Sys
     def delete
       @user = Sys::User.find(params[:id])
       @user.destroy
-      redirect_to sys_users_url, :notice => 'მომხმარებელი წაშლილია'
+      redirect_to sys_users_url, :notice => 'მომხმარებელი წაშლილია.'
     end
   end
 end

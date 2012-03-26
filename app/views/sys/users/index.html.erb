@@ -1,8 +1,11 @@
 <div class="page-header">
-  <h2>მომხმარებლები <small>და მათი მართვა</small></h2>
+  <h2>მომხმარებლები</h2>
 </div>
 <div class="btn-toolbar">
-<%= link_to icon_text('plus', 'ახალი მომხმარებელი'), sys_new_user_url, :class => ['btn'] %>
+  <%= link_to icon_text('plus', 'ახალი მომხმარებელი'), sys_new_user_url, :class => ['btn'] %>
+  <div class="pull-right">
+    <%= link_to icon_text('cog', 'როლები'), sys_roles_url, :class => 'btn' %>
+  </div>
 </div>
 <table class="table table-bordered table-striped">
   <thead>

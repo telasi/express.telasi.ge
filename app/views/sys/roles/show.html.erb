@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h2><%= @role.name %> <small><%= @role.description %></small></h2>
+</div>
+<div class="btn-toolbar">
+  <%= link_to icon_text('arrow-left', 'სიაში'), sys_roles_url, :class => 'btn' %>
+  <%= link_to icon_text('pencil', 'შეცვლა'), sys_edit_role_url(@role), :class => 'btn' %>
+  <%= link_to icon_text('trash', 'წაშლა'), sys_delete_role_url(@role), :method => :delete, :class => 'btn', :confirm => 'ნამდვილად გინდათ წაშლა?' %>
+</div>
