@@ -20,7 +20,7 @@ module Sys
     validate :mobile_format, :email_format
     validate :password_presence
 
-    index :email
+    index :email, :unique => true
     index :first_name
     index :last_name
 

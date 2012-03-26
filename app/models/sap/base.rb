@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module SAP
+module Sap
   class Base < ActiveRecord::Base
     self.abstract_class = true
   end

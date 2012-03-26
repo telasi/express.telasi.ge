@@ -14,6 +14,9 @@ ExpressTelasiGe::Application.routes.draw do
       get '/show/:id',      :action => :show,   :as => :show_user
       delete '/delete/:id', :action => :delete, :as => :delete_user
     end
+    scope 'warehouse', :controller => :warehouse do
+      get '/', :action => :index, :as => :warehouses
+    end
   end
 
   root :to => 'site#index'

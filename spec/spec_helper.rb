@@ -45,3 +45,4 @@ RSpec.configure do |config|
 end
 
 require 'factories/sys/user'
+require 'factories/sys/warehouse'
