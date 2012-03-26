@@ -1,5 +1,8 @@
 # -*- encoding : utf-8 -*-
 module Express
-  # SAP-ის სამუშაო მანდანტი.
-  MANDT = '200'
+  module Sap
+    MANDT = '200'
+    LANG_KA = '뱁'
+    SCHEMA = 'SAPSR3'
+  end
 end
