@@ -3,30 +3,25 @@
 </div>
 <div class="btn-toolbar">
   <%= link_to icon_text('refresh', 'სინქრონიზაცია'), sys_sync_warehouses_url, :class => 'btn', :method => :post, :confirm => 'ნმადვილად გინდათ სინქრონიზაცია?' %>
-  <%= link_to icon_text('plus', 'ახალი საწყობი'), sys_new_warehouse_url, :class => 'btn' %>
+  <%= link_to icon_text('plus', 'საწყობის დამატება'), sys_new_warehouse_url, :class => 'btn' %>
 </div>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th width="100">SAP</th>
       <th>დასახელება</th>
-      <th width="50" class="center"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
+      <th width="150">SAP-ის პარამეტრები</th>
     </tr>
   </thead>
   <tbody>
     <% @warehouses.each do |wh| -%>
       <tr>
-      	<td>
-      	  <%= tooltiped_text wh.werks, 'WERKS', :left %>
-      	  <span class="muted"><%= tooltiped_text wh.lgort, 'LGORT', :right %></span>
-      	</td>
         <td>
           <%= link_to wh.name, sys_show_warehouse_url(wh) %>
         </td>
-        <td class="center">
-          <%= link_to icon_text('pencil', nil, :tooltip => 'შეცვლა'), sys_edit_warehouse_url(wh) %>
-          <%= link_to icon_text('trash',  nil, :tooltip => 'წაშლა'),  sys_delete_warehouse_url(wh), :method => :delete, :confirm => 'ნამდვილად გინდათ ამ საწყობის წაშლა?' %>
-        </td>
+        <td>
+      	  <%= tooltiped_text wh.werks, 'WERKS', :left %>
+      	  <span class="muted"><%= tooltiped_text wh.lgort, 'LGORT', :right %></span>
+      	</td>
       </tr>
     <% end -%>
   </tbody>

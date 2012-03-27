@@ -38,14 +38,6 @@ module Sys
       redirect_to sys_warehouses_url
     end
 
-#    def edit
-#      @title = 'საწყობის შეცვლა'
-#      @warehouse = Sys::Warehouse.find(params[:id])
-#      if request.put?
-#        redirect_to sys_show_warehouse_url(@warehouse), :notice => 'საწყობი შეცვლილია.' if @warehouse.update_attributes(params[:sys_warehouse])
-#      end
-#    end
-
     def show
       @warehouse = Sys::Warehouse.find(params[:id])
       @sap_warehouse = @warehouse.sap_warehouse
@@ -53,11 +45,5 @@ module Sys
       @title = @warehouse.name
       @users = Sys::User.asc(:first_name, :last_name)
     end
-
-#    def delete
-#      @warehouse = Sys::Warehouse.find(params[:id])
-#      @warehouse.destroy
-#      redirect_to sys_warehouses_url, :notice => 'საწყობი წაშლილია.'
-#    end
   end
 end

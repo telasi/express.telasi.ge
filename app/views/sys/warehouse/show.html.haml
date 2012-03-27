@@ -8,8 +8,6 @@
 		%small <strong>#{@warehouse.werks}</strong> / #{@warehouse.lgort}
 .btn-toolbar
 	= link_to icon_text('arrow-left', 'სიაში'), sys_warehouses_url, :class => 'btn'
-	= link_to icon_text('pencil', 'შეცლა'), sys_edit_warehouse_url(@warehouse), :class => 'btn'
-	= link_to icon_text('trash',  'წაშლა'), sys_delete_warehouse_url(@warehouse), :class => 'btn', :method => :delete, :confirm => 'ნამდვილად გინდათ ამ საწყობის წაშლა?'
 %h3
 	SAP-ის მონაცემები <small>#{@sap_warehouse.lgobe}</small>
 %table.table.table-striped.table-bordered
@@ -27,8 +25,8 @@
 					#{address.address.floor}<br/>
 					- if address.address.floor
 						<span class="muted">#{address.address.cost_center.ltext}</span>
-.users
+.row
 	- @users.each do |user|
-		%input{ :type => :checkbox, :id => "user_#{user.id}", 'data-user' => user.id }
-		%label{ :for => "user_#{user.id}", :style => 'display: inline;' }= user.full_name
-		%br
+		.span4
+			%input{ :type => :checkbox, :id => "user_#{user.id}", 'data-user' => user.id }
+			%label{ :for => "user_#{user.id}", :style => 'display: inline;' }= user.full_name
