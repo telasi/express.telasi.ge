@@ -12,6 +12,7 @@ gem 'ruby-oci8', '~> 2.1.0'
 gem 'will_paginate', '~> 3.0'
 gem 'bootstrap-will_paginate'
 
+gem 'rs.ge', '~> 0.0.14'
 gem 'sqlite3'
 
 group :assets do
