@@ -16,9 +16,10 @@ module Sys
     validates_presence_of :email, :mobile
     validates_uniqueness_of :email
     validates_presence_of :first_name, :last_name
-    #validates_confirmation_of :password
     validate :mobile_format, :email_format
     validate :password_presence
+
+    has_and_belongs_to_many :warehouses, :class_name => 'Sys::Warehouse'
 
     index :email, :unique => true
     index :first_name

@@ -15,10 +15,13 @@ ExpressTelasiGe::Application.routes.draw do
       delete '/delete/:id', :action => :delete, :as => :delete_user
     end
     scope 'warehouse', :controller => :warehouse do
-      get    '/',           :action => :index,  :as => :warehouses
-      match  '/new',        :action => :new,    :as => :new_warehouse
+      get    '/',         :action => :index, :as => :warehouses
+      match  '/new',      :action => :new,   :as => :new_warehouse
+      post   '/sync',     :action => :sync,  :as => :sync_warehouses
+      get    '/show/:id', :action => :show,  :as => :show_warehouse
+      # TODO: remove these routes
       match  '/edit/:id',   :action => :edit,   :as => :edit_warehouse
-      get    '/show/:id',   :action => :show,   :as => :show_warehouse
+      
       delete '/delete/:id', :action => :delete, :as => :delete_warehouse
     end
   end

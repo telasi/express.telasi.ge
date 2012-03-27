@@ -31,6 +31,8 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    bootstrap-will_paginate (0.0.6)
+      will_paginate
     bson (1.6.1)
     bson_ext (1.6.1)
       bson (~> 1.6.1)
@@ -178,6 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-oracle_enhanced-adapter (~> 1.4.0)
+  bootstrap-will_paginate
   bson_ext (~> 1.5)
   c12-commons (~> 0.0.5)
   capybara

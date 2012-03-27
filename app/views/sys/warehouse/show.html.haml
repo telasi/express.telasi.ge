@@ -1,3 +1,7 @@
+:javascript
+	$(function() {
+		console.log('ინიციალიზირებულია');
+	});
 .page-header
 	%h2
 		#{@warehouse.name}
@@ -23,3 +27,8 @@
 					#{address.address.floor}<br/>
 					- if address.address.floor
 						<span class="muted">#{address.address.cost_center.ltext}</span>
+.users
+	- @users.each do |user|
+		%input{ :type => :checkbox, :id => "user_#{user.id}", 'data-user' => user.id }
+		%label{ :for => "user_#{user.id}", :style => 'display: inline;' }= user.full_name
+		%br

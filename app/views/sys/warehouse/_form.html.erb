@@ -4,8 +4,9 @@
 	  <%= @error %>
 	 <% end -%>
   <% end -%>
-  <%= f.input :werks, :label => 'WERKS', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწარმოს კოდი SAP-ში' %>
-  <%= f.input :lgort, :label => 'LGORT', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწყობის კოდი SAP-ში' %>
+  <p class="muted">ახალი საწყობის დასამატებლად შეიყვანეთ SAP-ის საწარმოს და საწყობის კოდები.</p>
+  <%= f.input :werks, :label => 'WERKS', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)} %>
+  <%= f.input :lgort, :label => 'LGORT', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)} %>
   <div class="form-actions">
     <%= f.button :submit, 'შენახვა', :class => 'btn-primary' %>
     <%= link_to 'გაუქმება', @warehouse.new? ? sys_warehouses_url : sys_show_warehouse_url(@warehouse), :class => 'btn' %>
