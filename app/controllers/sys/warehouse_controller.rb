@@ -6,6 +6,17 @@ module Sys
       @warehouses = Sys::Warehouse.asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 10)
     end
 
+    def add_user
+      warehouse = Sys::Warehouse.find(params[:id])
+      user = Sys::User.find(params[:user_id])
+      if params[:assign].to_s == 'true'
+        warehouse.users.push(user)
+      else
+        warehouse.users.delete(user)
+      end
+      render :json => {:response => :ok}
+    end
+
     def new
       @title = 'ახალი საწყობი'
       if request.post?

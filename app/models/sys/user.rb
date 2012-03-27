@@ -19,7 +19,7 @@ module Sys
     validate :mobile_format, :email_format
     validate :password_presence
 
-    has_and_belongs_to_many :warehouses, :class_name => 'Sys::Warehouse'
+    has_and_belongs_to_many :warehouses, :class_name => 'Sys::Warehouse', dependent: :nullify
 
     index :email, :unique => true
     index :first_name

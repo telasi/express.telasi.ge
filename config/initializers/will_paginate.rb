@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'mongoid'
 require 'will_paginate/collection'
 

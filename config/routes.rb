@@ -19,6 +19,13 @@ ExpressTelasiGe::Application.routes.draw do
       match  '/new',      :action => :new,   :as => :new_warehouse
       post   '/sync',     :action => :sync,  :as => :sync_warehouses
       get    '/show/:id', :action => :show,  :as => :show_warehouse
+      post   '/add_user/:id', :action => :add_user, :as => :add_warehouse_user
+    end
+  end
+
+  namespace 'sap' do
+    scope 'waybills', :controller => :waybills do
+      get '/', :action => :index, :as => :waybills
     end
   end
 

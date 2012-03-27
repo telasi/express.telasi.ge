@@ -10,7 +10,7 @@ module Sys
     validates_presence_of :werks
     validates_presence_of :lgort
 
-    has_and_belongs_to_many :users, :class_name => 'Sys::User'
+    has_and_belongs_to_many :users, :class_name => 'Sys::User', dependent: :nullify
 
     index :name
     index [[:werks, Mongo::ASCENDING], [:lgort, Mongo::ASCENDING]]
