@@ -9,7 +9,7 @@ module BootstrapHelper
 
   def icon_text(icn, txt = nil, opts = {})
     icon_name = "icon-#{icn}"
-    icon_name += " icon-white" if opts[:white] 
+    icon_name += " icon-white" if opts[:white]
     tooltip = opts[:tooltip] ? %Q{rel="tooltip" data-original-title="#{opts[:tooltip]}"} : nil
     %Q{<i class="#{icon_name}" #{tooltip}></i> #{txt}}.strip.html_safe
   end
