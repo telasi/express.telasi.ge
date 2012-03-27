@@ -8,8 +8,10 @@
 		%small <strong>#{@warehouse.werks}</strong> / #{@warehouse.lgort}
 .btn-toolbar
 	= link_to icon_text('arrow-left', 'სიაში'), sys_warehouses_url, :class => 'btn'
-%h3
-	SAP-ის მონაცემები <small>#{@sap_warehouse.lgobe}</small>
+	.pull-right
+		= link_to '&larr; წინა'.html_safe, sys_show_warehouse_url(@prev), :class => 'btn' if @prev
+		= link_to 'შემდეგი &rarr;'.html_safe, sys_show_warehouse_url(@next), :class => 'btn' if @next
+%h3 მისამართები
 %table.table.table-striped.table-bordered
 	%thead
 		%tr
@@ -23,10 +25,11 @@
 					<span class="muted">#{address.address.to_s}</span>
 				%td
 					#{address.address.floor}<br/>
-					- if address.address.floor
+					- if address.address.floor and not address.address.floor.strip.empty?
 						<span class="muted">#{address.address.cost_center.ltext}</span>
+%h3 მომხმარებლები
 .row
 	- @users.each do |user|
-		.span4
+		.span3
 			%input{ :type => :checkbox, :id => "user_#{user.id}", 'data-user' => user.id }
 			%label{ :for => "user_#{user.id}", :style => 'display: inline;' }= user.full_name

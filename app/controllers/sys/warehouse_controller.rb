@@ -44,6 +44,18 @@ module Sys
       @sap_addresses = @sap_warehouse.addresses
       @title = @warehouse.name
       @users = Sys::User.asc(:first_name, :last_name)
+      @next = next_warehouse(@warehouse)
+      @prev = prev_warehouse(@warehouse)
+    end
+
+    private
+
+    def next_warehouse(w)
+      Sys::Warehouse.all_of(:werks.gte => w.werks, :lgort.gte => w.lgort, :_id.ne => w.id).asc(:werks, :lgort).first
+    end
+
+    def prev_warehouse(w)
+      Sys::Warehouse.all_of(:werks.lte => w.werks, :lgort.lte => w.lgort, :_id.ne => w.id).desc(:werks, :lgort).first
     end
   end
 end
