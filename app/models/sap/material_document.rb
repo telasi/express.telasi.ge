@@ -11,6 +11,26 @@ module Sap
 
     self.date_fields :bldat, :budat
 
+    def purchase?
+      item = self.items.first
+      item.ebeln[0..1] == '45' and item.bwart == '101'
+    end
+
+    def inner?
+      item = self.items.first
+      item.ebeln[0..1] == '49' and item.bwart == '351'
+    end
+
+    def return?
+      item = self.items.first
+      item.bwart == '301' or item.bwart == '311'
+    end
+
+    def sale?
+      item = self.items.first
+      item.bwart = '983'
+    end
+
     def to_waybill
       waybill = RS::Waybill.new
 

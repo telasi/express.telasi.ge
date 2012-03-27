@@ -3,16 +3,17 @@ require 'rs'
 
 describe 'მასალის დოკუმენტის ამოღება' do
   before(:all) do
-    @doc = Sap::MaterialDocument.find(MANDT, '5000000058', 2011)
+    @doc = Sap::MaterialDocument.find(MANDT, '4900000283', 2011)
   end
   subject { @doc }
   it { should_not be_nil }
   its(:mandt) { should == MANDT }
-  its(:mblnr) { should == '5000000058' }
+  its(:mblnr) { should == '4900000283' }
   its(:items) { should_not be_empty }
   its(:bldat_date) { should be_instance_of Date }
   its(:budat_date) { should be_instance_of Date }
-  context 'convert into RS waybill' do
+  its(:inner?) { should == true }
+  context 'ზედნადებში კონვერტაცია' do
     before(:all) do
       @waybill = @doc.to_waybill
     end
@@ -28,17 +29,17 @@ describe 'მასალის დოკუმენტის ამოღე�
     its(:check_buyer_tin) { should == true }
     its(:start_address) { should == 'ცენტრალური ოფისი ვანის ქ. № 3' }
     its(:end_address) { should == 'ცენტრალური ოფისი ვანის ქ. № 3' }
-    context "items" do
+    context 'პოზიციების შემოწმება' do
       subject { @waybill.items }
       it { should_not be_nil }
       it { should_not be_empty }
       its(:size) { should == @waybill.items.size }
-      context "first item" do
+      context 'პირველი პოზიცია' do
         subject { @waybill.items.first }
-        its(:prod_name) { should == 'მაერთებელი განშტოების P2X-95' }
-        its(:quantity) { should == 50 }
+        its(:prod_name) { should == 'სპეც.ტანსაცმელი' }
+        its(:quantity) { should == 10 }
         its(:unit_id) { should == RS::WaybillUnit::OTHERS }
-        its(:bar_code) { should == '100002658' }
+        its(:bar_code) { should == '300001495' }
         its(:unit_name) { should == 'ST' }
         its(:price) { should == 0 }
       end
