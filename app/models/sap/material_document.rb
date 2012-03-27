@@ -31,22 +31,21 @@ module Sap
       item.bwart = '983'
     end
 
+    def waybill_document?
+      self.purchase? or self.inner? or self.return? or self.sale?
+    end
+
     def to_waybill
       waybill = RS::Waybill.new
 
       not_auto = nil
-      #with_auto = nil
       self.items.each do |item|
         not_auto = item and break unless item.auto?
-        #with_auto = item if item.auto?
-        #break if not_auto and with_auto
       end
 
-      # operation type
-      case not_auto.ebeln[0..1]
-      when '45' # შესყიდვა
+      if self.purchase?
         waybill.type = self.driver_info ? RS::WaybillType::TRANSPORTATION : RS::WaybillType::WITHOUT_TRANSPORTATION
-      when '49' # შიდა გადაზიდვა
+      elsif self.inner?
         waybill.type = RS::WaybillType::INNER
         waybill.seller_id       = Express::TELASI_PAYER_ID
         waybill.seller_tin      = Express::TELASI_TIN

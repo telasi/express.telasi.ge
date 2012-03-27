@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+
+require 'spec_helper'
 require 'rs'
 
 describe 'მასალის დოკუმენტის ამოღება' do
