@@ -9,6 +9,7 @@ gem 'c12-commons', '~> 0.0.5'
 gem 'composite_primary_keys', '~> 5'
 gem 'activerecord-oracle_enhanced-adapter', '~> 1.4.0'
 gem 'ruby-oci8', '~> 2.1.0'
+gem 'will_paginate', '~> 3.0'
 
 gem 'sqlite3'
 

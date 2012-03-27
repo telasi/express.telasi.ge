@@ -13,5 +13,4 @@ class ApplicationController < ActionController::Base
     end
     @__user
   end
-
 end

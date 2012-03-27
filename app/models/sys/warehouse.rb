@@ -4,12 +4,9 @@ module Sys
     include Mongoid::Document
     include Mongoid::Timestamps
     field :name, type: String
-    field :address, type: String
     field :werks
     field :lgort
 
-    validates_presence_of :name
-    validates_presence_of :address
     validates_presence_of :werks
     validates_presence_of :lgort
 

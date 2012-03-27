@@ -3,7 +3,7 @@ module Sys
   class WarehouseController < SysController
     def index
       @title = 'საწყობები'
-      @warehouses = Sys::Warehouse.all.asc(:name)
+      @warehouses = Sys::Warehouse.asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 2)
     end
 
     def new
@@ -11,7 +11,11 @@ module Sys
       if request.post?
         @warehouse = Sys::Warehouse.new(params[:sys_warehouse])
         if @warehouse.valid?
-          if @warehouse.sap_warehouse
+          existing = Sys::Warehouse.where(:werks => @warehouse.werks, :lgort => @warehouse.lgort).first
+          if existing
+            @error = 'ეს საწყობი უკვე სიაშია.'
+          elsif @warehouse.sap_warehouse
+            @warehouse.name = @warehouse.sap_warehouse.lgobe
             @warehouse.save!
             redirect_to sys_warehouses_url, :notice => 'საწყობი შექმნილია.'
           else
@@ -34,6 +38,7 @@ module Sys
     def show
       @warehouse = Sys::Warehouse.find(params[:id])
       @sap_warehouse = @warehouse.sap_warehouse
+      @sap_addresses = @sap_warehouse.addresses
       @title = @warehouse.name
     end
 

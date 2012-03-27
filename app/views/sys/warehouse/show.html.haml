@@ -1,8 +1,25 @@
 .page-header
 	%h2
 		#{@warehouse.name}
-		%small= @warehouse.address
+		%small <strong>#{@warehouse.werks}</strong> / #{@warehouse.lgort}
 .btn-toolbar
 	= link_to icon_text('arrow-left', 'სიაში'), sys_warehouses_url, :class => 'btn'
 	= link_to icon_text('pencil', 'შეცლა'), sys_edit_warehouse_url(@warehouse), :class => 'btn'
 	= link_to icon_text('trash',  'წაშლა'), sys_delete_warehouse_url(@warehouse), :class => 'btn', :method => :delete, :confirm => 'ნამდვილად გინდათ ამ საწყობის წაშლა?'
+%h3
+	SAP-ის მონაცემები <small>#{@sap_warehouse.lgobe}</small>
+%table.table.table-striped.table-bordered
+	%thead
+		%tr
+			%th დასახელება, მისამართი
+			%th{:width => 500} ხარჯის წარმოქმნის ადგილი
+	%tbody
+		- @sap_addresses.each do |address|
+			%tr
+				%td
+					#{address.address.name1}<br/>
+					<span class="muted">#{address.address.to_s}</span>
+				%td
+					#{address.address.floor}<br/>
+					- if address.address.floor
+						<span class="muted">#{address.address.cost_center.ltext}</span>

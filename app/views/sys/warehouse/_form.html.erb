@@ -4,8 +4,6 @@
 	  <%= @error %>
 	 <% end -%>
   <% end -%>
-  <%= f.input :name, :label => 'დასახელება', :input_html => {:autofocus => :true} %>
-  <%= f.input :address, :label => 'მისამართი', :input_html => {:class => :span6} %>
   <%= f.input :werks, :label => 'WERKS', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწარმოს კოდი SAP-ში' %>
   <%= f.input :lgort, :label => 'LGORT', :input_html => {:class => :span1, :disabled => (not @warehouse.new?)}, :hint => 'საწყობის კოდი SAP-ში' %>
   <div class="form-actions">
