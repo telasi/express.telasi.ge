@@ -11,9 +11,18 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.datepicker
 //= require jquery_ujs
 //= require_tree .
 $(function() {
 	// enable tooltips
 	$('[rel~=tooltip]').tooltip();
+	// enable datepickers
+	$('.datepicker').datepicker({
+	  dateFormat: 'dd-M-yy',
+	  monthNames: ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივინისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'],
+	  dayNamesMin: ['კვ', 'ორ', 'სმ', 'ოთ', 'ხთ', 'პრ', 'შბ'],
+	  changeMonth: true,
+	  changeYear: true
+	});
 });

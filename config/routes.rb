@@ -26,6 +26,8 @@ ExpressTelasiGe::Application.routes.draw do
   namespace 'sap' do
     scope 'waybills', :controller => :waybills do
       get '/', :action => :index, :as => :waybills
+      post '/sync', :action => :sync, :as => :sync_waybills
+      get '/show/:id', :action => :show, :as => :show_waybill
     end
   end
 
