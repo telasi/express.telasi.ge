@@ -16,7 +16,11 @@ module Sap
       field :mjahr,     type: Integer
       field :date,      type: Date
       field :type,      type: Integer
+      field :rs_id,     type: Integer
+      field :rs_number, type: String
       field :rs_status, type: Integer, default: RS::Waybill::STATUS_SAVED
+      field :rs_start,  type: Date
+      field :rs_end,    type: Date
       belongs_to :warehouse, :class_name => 'Sys::Warehouse'
 
       index [[:mblnr, Mongo::ASCENDING], [:mjahr, Mongo::ASCENDING]]

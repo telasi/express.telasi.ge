@@ -4,6 +4,12 @@
 
 <div class="btn-toolbar">
   <%= link_to icon_text('arrow-left', 'სიაში'), sap_waybills_url, :class => 'btn' %>
+  <% if @doc.rs_status == RS::Waybill::STATUS_SAVED -%>
+    <%= link_to icon_text('share', 'გადავაგზავნო საგადასახადო პორტალში'), sap_send_to_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ გადაგზავნა?', :class => 'btn' %>
+  <% elsif @doc.rs_status == RS::Waybill::STATUS_ACTIVE -%>
+    <%= link_to icon_text('ok-sign', 'დასრულება', :white => true), sap_close_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების დასრულება? დასრულებული ზედნადების შეცვლა შეუძლებელი იქნება!', :class => ['btn', 'btn-success'] %>
+    <%= link_to icon_text('remove-sign', 'გაუქმება', :white => true), sap_cancel_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების გაუქმება?', :class => ['btn', 'btn-danger'] %>
+  <% end -%>
 </div>
 
 <div class="waybill-data">
@@ -74,7 +80,7 @@
         </tr>
         <tr>
           <th>RS.GE-ს ნომერი</th>
-          <td></td>
+          <td><span class="label label-info"><%= @doc.rs_number %></span> <%= @doc.rs_start %></td>
         </tr>
       </table>
     </div>

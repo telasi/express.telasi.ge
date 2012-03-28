@@ -4,7 +4,7 @@ module Sap
     def index
       @title = 'ზედნადებები'
       @date = current_date
-      @docs = Sap::Ext::MaterialDocument.where(:date => @date)
+      @docs = Sap::Ext::MaterialDocument.where(:date => @date).asc(:mblnr)
     end
 
     def sync
@@ -42,7 +42,38 @@ module Sap
       @title = 'ზედნადების ნახვა'
       @doc = Sap::Ext::MaterialDocument.find(params[:id])
       @sap_doc = @doc.sap_doc
-      @waybill = @sap_doc.to_waybill 
+      @waybill = @sap_doc.to_waybill
+    end
+
+    def send_to_rs
+      @doc = Sap::Ext::MaterialDocument.find(params[:id])
+      @sap_doc = @doc.sap_doc
+      @waybill = @sap_doc.to_waybill
+
+      #######################
+      @waybill.transport_type_id = 1 # მანქანა!
+      @waybill.car_number = 'WDW842'
+      @waybill.driver_tin = '02001000490'
+      @waybill.driver_name = 'დიმიტრი ყურაშვილი'
+      @waybill.items = [@waybill.items[0]]
+      
+      @waybill.validate
+      #puts @waybill.validation_errors
+      #######################
+
+      @waybill.status = RS::Waybill::STATUS_SAVED
+      RS.save_waybill(@waybill, 'su' => Express::SU, 'sp' => Express::SP)
+      RS.activate_waybill('waybill_id' => @waybill.id, 'su' => Express::SU, 'sp' => Express::SP)
+      wb = RS.get_waybill('waybill_id' => @waybill.id, 'su' => Express::SU, 'sp' => Express::SP)
+
+      @doc.rs_id = @waybill.id
+      @doc.rs_number = wb.number
+      @doc.rs_status = RS::Waybill::STATUS_ACTIVE
+      @doc.rs_start = wb.activate_date
+      @doc.rs_end = nil
+      @doc.save!
+
+      redirect_to sap_show_waybill_url(@doc), :notice => 'ზედნადები გაგზავნილია და აქტივირებულია.'
     end
 
     private
