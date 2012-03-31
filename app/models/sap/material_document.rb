@@ -11,6 +11,10 @@ module Sap
 
     self.date_fields :bldat, :budat
 
+    def main_items
+      self.items.find_all {|item| item.shkzg == 'H' }
+    end
+
     def purchase?
       item = self.items.first
       (item.ebeln[0..1] == '45' and item.bwart == '101') or item.bwart == '301'
@@ -61,17 +65,7 @@ module Sap
         raise RuntimeError.new("not supported")
       end
 
-      if self.driver_info
-        waybill.car_number = self.driver_info.vehicle
-        waybill.transport_type_id = RS::TransportType::VEHICLE
-        waybill.driver_name = self.driver_info.driver
-        waybill.driver_tin = self.driver_info.drperno
-        waybill.check_driver_tin  = true
-        waybill.seller_info = self.driver_info.name
-        waybill.buyer_info = self.driver_info.namepo
-      end
-
-      # start/end address
+      # საწყისი და საბოლოო მისამართის განსაზღვრა
       if self.return?
         address1 = not_auto.warehouse_address if not_auto
         address2 = auto.warehouse_address if auto
@@ -82,9 +76,27 @@ module Sap
       waybill.start_address = address1.address.to_s if address1
       waybill.end_address = address2.address.to_s if address2
 
+      # ტრანსპორტირების პარამეტრების განსაზღვრა
+      if self.driver_info
+        waybill.seller_info = self.driver_info.name
+        waybill.buyer_info = self.driver_info.namepo
+        waybill.car_number = self.driver_info.vehicle
+        if waybill.car_number and not waybill.car_number.strip.empty?
+          waybill.transport_type_id = RS::TransportType::VEHICLE
+          waybill.driver_name = self.driver_info.driver
+          waybill.driver_tin = self.driver_info.drperno
+          waybill.check_driver_tin  = true
+        elsif waybill.start_address == waybill.end_address
+          waybill.type = RS::WaybillType::WITHOUT_TRANSPORTATION
+        else
+          waybill.transport_type_id = RS::TransportType::OTHERS
+          waybill.transport_type_name = 'თვითგადაზიდვა'
+        end
+      end
+
       # items
       items = []
-      self.items.each do |doc_item|
+      self.main_items.each do |doc_item|
         item = RS::WaybillItem.new
         item.bar_code = doc_item.matnr.match(/[1-9][0-9]*/)[0]
         item.prod_name = doc_item.material_name_ka.maktx

@@ -62,8 +62,15 @@
       <h3>ტრანსპორტირების მონაცემები</h3>
       <table class="table table-striped table-bordered">
         <tr>
-          <th width="150">სახეობა</th>
-          <td><%= @waybill.transport_type_id %></td>
+          <th width="150">ზედნადების ტიპი</th>
+          <td><%= RS::WaybillType::NAMES[@waybill.type] %></td>
+        </tr>
+        <tr>
+          <th width="150">ტრანსპორტ. სახე</th>
+          <td>
+            <%= RS::TransportType::NAMES[@waybill.transport_type_id] %>
+            <span class="muted"><%= @waybill.transport_type_name %></span>
+          </td>
         </tr>
         <tr>
           <th width="150">მანქანის ნომერი</th>
