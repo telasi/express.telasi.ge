@@ -29,6 +29,10 @@
           <th>დაწყების ადგილი</th>
           <td><%= @waybill.start_address %></td>
         </tr>
+        <tr>
+          <th>ტვირთის გამგზავნი</th>
+          <td><%= @waybill.seller_info %> <span class="muted"><%= @sap_doc.driver_info.perno %></span></td>
+        </tr>
       </table>
     </div>
     <div class="span6">
@@ -43,8 +47,12 @@
           <td><%= @waybill.buyer_name %></td>
         </tr>
         <tr>
-          <th>დაწყების ადგილი</th>
+          <th>დასრულების ადგილი</th>
           <td><%= @waybill.end_address %></td>
+        </tr>
+        <tr>
+          <th>ტვირთის მიმღები</th>
+          <td><%= @waybill.buyer_info %> <span class="muted"><%= @sap_doc.driver_info.pernopo %></span></td>
         </tr>
       </table>
     </div>
@@ -80,7 +88,11 @@
         </tr>
         <tr>
           <th>RS.GE-ს ნომერი</th>
-          <td><span class="label label-info"><%= @doc.rs_number %></span> <%= @doc.rs_start %></td>
+          <td>
+            <% if @doc.rs_number -%>
+             <span class="label label-info"><%= @doc.rs_number %></span> <%= @doc.rs_start %>
+            <% end -%>
+          </td>
         </tr>
       </table>
     </div>

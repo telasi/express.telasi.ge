@@ -10,13 +10,13 @@ module Sap
 
     # საწყობის მისამართი (გასვლა).
     def warehouse_address
-      Sap::WarehouseAddress.where(:werks => self.werks, :lgort => self.lgort).first
+      Sap::WarehouseAddress.where(:werks => self.werks, :lgort => self.lgort, :mandt => self.mandt).first
     end
 
     # შესყიდვის მისამართი (დანიშნულება).
     def invoice_address
-      item = Sap::InvoiceItem.where(:ebeln => self.ebeln).first
-      Sap::WarehouseAddress.where(:werks => item.werks, :lgort => item.lgort).first if item
+      item = Sap::InvoiceItem.where(:ebeln => self.ebeln, :mandt => self.mandt).first
+      Sap::WarehouseAddress.where(:werks => item.werks, :lgort => item.lgort, :mandt => self.mandt).first if item
     end
 
     # არის თუ არა ეს პოზიცია დაგენერირებული ავტომატურად?

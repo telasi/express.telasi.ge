@@ -13,12 +13,12 @@ module Sap
 
     def purchase?
       item = self.items.first
-      item.ebeln[0..1] == '45' and item.bwart == '101'
+      (item.ebeln[0..1] == '45' and item.bwart == '101') or item.bwart == '301'
     end
 
     def inner?
       item = self.items.first
-      item.ebeln[0..1] == '49' and item.bwart == '351'
+      (item.ebeln[0..1] == '49' and item.bwart == '351') or self.return?
     end
 
     def return?
@@ -32,21 +32,25 @@ module Sap
     end
 
     def waybill_document?
-      self.purchase? or self.inner? or self.return? or self.sale?
+      self.inner? # or self.sale? # or self.purchase? or self.return? -- XXXX
     end
 
     def to_waybill
       waybill = RS::Waybill.new
 
       not_auto = nil
+      auto = nil
       self.items.each do |item|
-        not_auto = item and break unless item.auto?
+        if item.auto?
+          auto = item
+        else
+          not_auto = item
+        end
+        auto and not_auto unless item.auto?
       end
 
-      if self.purchase?
-        waybill.type = self.driver_info ? RS::WaybillType::TRANSPORTATION : RS::WaybillType::WITHOUT_TRANSPORTATION
-      elsif self.inner?
-        waybill.type = RS::WaybillType::INNER
+      if self.inner?
+        waybill.type            = RS::WaybillType::INNER
         waybill.seller_id       = Express::TELASI_PAYER_ID
         waybill.seller_tin      = Express::TELASI_TIN
         waybill.seller_name     = Express::TELASI_NAME
@@ -54,7 +58,7 @@ module Sap
         waybill.buyer_tin       = Express::TELASI_TIN
         waybill.buyer_name      = Express::TELASI_NAME
       else
-        raise RuntimeError.new("not supported: #{ebeln}")
+        raise RuntimeError.new("not supported")
       end
 
       if self.driver_info
@@ -63,15 +67,20 @@ module Sap
         waybill.driver_name = self.driver_info.driver
         waybill.driver_tin = self.driver_info.drperno
         waybill.check_driver_tin  = true
+        waybill.seller_info = self.driver_info.name
+        waybill.buyer_info = self.driver_info.namepo
       end
 
       # start/end address
-      if not_auto
-        address1 = not_auto.warehouse_address
-        address2 = not_auto.invoice_address
-        waybill.start_address = address1.address.to_s if address1
-        waybill.end_address   = address2.address.to_s if address2
+      if self.return?
+        address1 = not_auto.warehouse_address if not_auto
+        address2 = auto.warehouse_address if auto
+      else
+        address1 = not_auto.warehouse_address if not_auto
+        address2 = not_auto.invoice_address if not_auto
       end
+      waybill.start_address = address1.address.to_s if address1
+      waybill.end_address = address2.address.to_s if address2
 
       # items
       items = []

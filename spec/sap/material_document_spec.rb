@@ -30,7 +30,7 @@ describe 'მასალის დოკუმენტის ამოღე�
     its(:buyer_tin)  { should == Express::TELASI_TIN }
     its(:check_buyer_tin) { should == true }
     its(:start_address) { should == 'ცენტრალური ოფისი ვანის ქ. № 3' }
-    its(:end_address) { should == 'ცენტრალური ოფისი ვანის ქ. № 3' }
+    its(:end_address) { should == 'ვარკეთილი 3,მე-3 მკრნ კორპ.№ 310' }
     context 'პოზიციების შემოწმება' do
       subject { @waybill.items }
       it { should_not be_nil }
@@ -47,4 +47,28 @@ describe 'მასალის დოკუმენტის ამოღე�
       end
     end
   end
+end
+
+describe 'მასალის დოკუმენტის ამოღება (BWART = 351)' do
+  before(:all) do
+    @doc = Sap::MaterialDocument.find(MANDT, '4900076377', 2012)
+    @address = @doc.items.first.invoice_address
+  end
+  subject { @address }
+  its(:lgort) { should  == 'C001' }
+  its(:werks) { should  == '1000' }
+  context 'ტექსტური წარმოდგენა' do
+    subject { @address.address.to_s }
+    it { should == 'ლილო 51' }
+  end
+end
+
+describe 'მასალის დოკუმენტის ამოღება (BWART = 311)' do
+  before(:all) do
+    @doc = Sap::MaterialDocument.find(MANDT, '4900076388', 2012)
+    @waybill = @doc.to_waybill
+  end
+  subject { @waybill }
+  its(:start_address) { should == 'ლილო 51' }
+  its(:end_address) { should == 'ცენტრალური ოფისი ვანის ქ. № 3' }
 end

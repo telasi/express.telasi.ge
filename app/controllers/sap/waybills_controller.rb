@@ -20,8 +20,8 @@ module Sap
             doc.type = Sap::Ext::MaterialDocument::TYPE_PURCHASE
           elsif sap_doc.inner?
             doc.type = Sap::Ext::MaterialDocument::TYPE_INNER
-          elsif sap_doc.return?
-            doc.type = Sap::Ext::MaterialDocument::TYPE_RETURN
+          #elsif sap_doc.return?
+          #  doc.type = Sap::Ext::MaterialDocument::TYPE_RETURN
           elsif sap_doc.sale?
             doc.type = Sap::Ext::MaterialDocument::TYPE_SALE
           end

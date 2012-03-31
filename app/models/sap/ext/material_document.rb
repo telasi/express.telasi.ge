@@ -9,7 +9,7 @@ module Sap
 
       TYPE_PURCHASE = 1
       TYPE_INNER    = 2
-      TYPE_RETURN   = 3
+      #TYPE_RETURN   = 3
       TYPE_SALE     = 4
 
       field :mblnr,     type: String
@@ -36,8 +36,8 @@ module Sap
           'shopping-cart'
         when TYPE_INNER
           'refresh'
-        when TYPE_RETURN
-          'repeat'
+        #when TYPE_RETURN
+        #  'repeat'
         when TYPE_SALE
           'share-alt'
         end
@@ -49,8 +49,8 @@ module Sap
           'შესყიდვა'
         when TYPE_INNER
           'შიდა'
-        when TYPE_RETURN
-          'დაბრუნება'
+        #when TYPE_RETURN
+        #  'დაბრუნება'
         when TYPE_SALE
           'გაყიდვა'
         end
@@ -70,11 +70,11 @@ module Sap
       def rs_status_text
         case self.rs_status
         when RS::Waybill::STATUS_ACTIVE
-          'გზაშია'
+          'აქტივირებული'
         when RS::Waybill::STATUS_CLOSED
-          'ჩატანილია'
+          'დასრულებული'
         else
-          'არ გასულა'
+          'წინასწარი'
         end
       end
     end
