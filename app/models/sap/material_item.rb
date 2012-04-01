@@ -23,5 +23,10 @@ module Sap
     def auto?
       self.xauto.upcase == 'X'
     end
+
+    # შესაბამისი ზომის ერთეულის პოვნა.
+    def unit
+      Sap::Unit.where(:mandt => Express::Sap::MANDT, :spras => Express::Sap::LANG_KA, :msehi => self.meins).first
+    end
   end
 end

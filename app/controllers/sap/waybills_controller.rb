@@ -75,9 +75,15 @@ module Sap
     def close_rs
       doc = Sap::Ext::MaterialDocument.find(params[:id])
       RS.close_waybill('waybill_id' => doc.rs_id, 'su' => Express::SU, 'sp' => Express::SP)
-      doc.rs_status = RS::Waybill::STATUS_CLOSED
-      doc.save!
+      doc.sync_waybill!
       redirect_to sap_show_waybill_url(doc), :notice => 'ზედნადები დახურულია.'
+    end
+
+    def cancel_rs
+      doc = Sap::Ext::MaterialDocument.find(params[:id])
+      RS.deactivate_waybill('waybill_id' => doc.rs_id, 'su' => Express::SU, 'sp' => Express::SP)
+      doc.sync_waybill!
+      redirect_to sap_show_waybill_url(doc), :notice => 'ზედნადები გაუქმებულია.'
     end
 
     private

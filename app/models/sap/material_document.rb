@@ -101,7 +101,8 @@ module Sap
         item.bar_code = doc_item.matnr.match(/[1-9][0-9]*/)[0]
         item.prod_name = doc_item.material_name_ka.maktx
         item.unit_id = RS::WaybillUnit::OTHERS
-        item.unit_name = doc_item.meins
+        unit = doc_item.unit
+        item.unit_name = unit ? unit.mseht : 'ერთეული'
         item.quantity = doc_item.menge
         item.price = 0 #doc_item.dmbtr / item.quantity
         items << item
