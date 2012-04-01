@@ -16,6 +16,7 @@ module Sap
       field :mjahr,     type: Integer
       field :date,      type: Date
       field :type,      type: Integer
+      field :storno,    type: Boolean
       field :rs_id,     type: Integer
       field :rs_number, type: String
       field :rs_status, type: Integer, default: RS::Waybill::STATUS_SAVED

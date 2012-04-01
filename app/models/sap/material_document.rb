@@ -35,6 +35,11 @@ module Sap
       item.bwart = '983'
     end
 
+    def storno?
+      storno_num = self.items.first.smbln
+      storno_num and not storno_num.strip.empty?
+    end
+
     def waybill_document?
       self.inner? # or self.sale? # or self.purchase? or self.return? -- XXXX
     end

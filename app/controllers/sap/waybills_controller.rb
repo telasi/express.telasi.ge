@@ -25,6 +25,8 @@ module Sap
           elsif sap_doc.sale?
             doc.type = Sap::Ext::MaterialDocument::TYPE_SALE
           end
+          # storno
+          doc.storno = sap_doc.storno?
           # warehouse
           item = sap_doc.items.first
           warehouse = Sys::Warehouse.where(:werks => item.werks, :lgort => item.lgort).first
