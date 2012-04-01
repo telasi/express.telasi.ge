@@ -1,11 +1,11 @@
 .page-header
 	%h2 სისტემაში შესვლა
-= form_tag(login_url, :class => 'form-horizontal', :id => 'login-form') do |f|
+= form_tag(login_url, :class => 'form', :id => 'login-form') do |f|
 	- if @error
 		= bootstrap_alert(:id => 'error-explanation', :class => :error) do
 			= @error
 	.control-group
-		.control-label= label_tag :email, 'ელ.ფოსტა'
+		.control-label= label_tag :email, 'მომხმარებლი ან ელ.ფოსტა'
 		.controls= text_field_tag :email, params[:email], :autofocus => true
 	.control-group
 		.control-label= label_tag :password, 'პაროლი'

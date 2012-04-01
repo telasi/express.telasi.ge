@@ -30,7 +30,7 @@ module Sys
     before_create :user_before_create
 
     def self.authenticate(email, pwd)
-      user = User.where(:email => email).first
+      user = C12.correct_email?(email) ? User.where(:email => email).first : User.where(:name => email).first
       user if user and user.hashed_password == Digest::SHA1.hexdigest("#{pwd}dimitri#{user.salt}")
     end
 
