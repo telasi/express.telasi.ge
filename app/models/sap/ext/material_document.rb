@@ -38,16 +38,17 @@ module Sap
         self.rs_id and self.rs_status == RS::Waybill::STATUS_CLOSED
       end
 
-      def sync_waybill!(waybill_id)
-        wb = RS.get_waybill('waybill_id' => waybill_id, 'su' => Express::SU, 'sp' => Express::SP)
-        if wb.status == RS::Waybill::STATUS_DELETED or wb.status == RS::Waybill::STATUS_DEACTIVATED
+      def sync_waybill!(waybill_id = nil)
+        id = waybill_id || self.rs_id
+        wb = RS.get_waybill('waybill_id' => id, 'su' => Express::SU, 'sp' => Express::SP) if id
+        if wb.nil? or (wb.status == RS::Waybill::STATUS_DELETED or wb.status == RS::Waybill::STATUS_DEACTIVATED)
           self.rs_id = nil
           self.rs_number = nil
-          self.rs_status = nil
+          self.rs_status = RS::Waybill::STATUS_SAVED
           self.rs_start = nil
           self.rs_end = nil
         else
-          self.rs_id = waybill_id
+          self.rs_id = id
           self.rs_number = wb.number
           self.rs_status = wb.status
           self.rs_start = wb.activate_date
@@ -55,7 +56,7 @@ module Sap
         end
         self.save!
       end
-      
+
       def type_icon
         case self.type
         when TYPE_PURCHASE

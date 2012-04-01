@@ -66,6 +66,20 @@ module Sap
       redirect_to sap_show_waybill_url(doc), :notice => msg 
     end
 
+    def sync_rs
+      doc = Sap::Ext::MaterialDocument.find(params[:id])
+      doc.sync_waybill!
+      redirect_to sap_show_waybill_url(doc), :notice => 'სინქრონიზაცია დასრულეუბლია.'
+    end
+
+    def close_rs
+      doc = Sap::Ext::MaterialDocument.find(params[:id])
+      RS.close_waybill('waybill_id' => doc.rs_id, 'su' => Express::SU, 'sp' => Express::SP)
+      doc.rs_status = RS::Waybill::STATUS_CLOSED
+      doc.save!
+      redirect_to sap_show_waybill_url(doc), :notice => 'ზედნადები დახურულია.'
+    end
+
     private
 
     def current_date

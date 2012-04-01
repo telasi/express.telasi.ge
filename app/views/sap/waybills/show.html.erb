@@ -15,6 +15,10 @@
   <% elsif @doc.rs_status == RS::Waybill::STATUS_ACTIVE -%>
     <%= link_to icon_text('ok-sign', 'დასრულება', :white => true), sap_close_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების დასრულება? დასრულებული ზედნადების შეცვლა შეუძლებელი იქნება!', :class => ['btn', 'btn-success'] %>
     <%= link_to icon_text('remove-sign', 'გაუქმება', :white => true), sap_cancel_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების გაუქმება?', :class => ['btn', 'btn-danger'] %>
+    <%= link_to icon_text('refresh', 'სინქრონიზაცია'), sap_sync_rs_url(@doc), :method => :post, :class => 'btn' %>
+  <% elsif @doc.rs_status == RS::Waybill::STATUS_CLOSED -%>
+    <%= link_to icon_text('remove-sign', 'გაუქმება', :white => true), sap_cancel_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების გაუქმება?', :class => ['btn', 'btn-danger'] %>
+    <%= link_to icon_text('refresh', 'სინქრონიზაცია'), sap_sync_rs_url(@doc), :method => :post, :class => 'btn' %>
   <% end -%>
 </div>
 

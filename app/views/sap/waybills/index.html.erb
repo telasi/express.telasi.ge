@@ -22,7 +22,9 @@
     <tr>
       <th width="16" class="center"><%= icon_text 'picture'%></th>
       <th width="100">№, თარიღი</th>
-      <th>საწყობი</th>
+      <th width="200">საწყობი</th>
+      <th width="150">ზედნადების №</th>
+      <th>თარიღები</th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +43,20 @@
             <%= doc.warehouse.name %><br/>
             <span class="muted"><strong><%= doc.warehouse.werks %></strong> <%= doc.warehouse.lgort %></span>
           <% end -%>
+       	</td>
+       	<td class="right">
+       	  <% if doc.rs_id -%>
+       	    <span class="badge badge-success"><%= tooltiped_text doc.rs_number, 'ზედნადების ნომერი', :left %></span><br/>
+       	    <span><%= tooltiped_text doc.rs_id, 'ზედნადების ID', :left %></span>
+       	  <% end %>
+       	</td>
+       	<td>
+       	  <% if doc.rs_start -%>
+       	    <%= icon_text 'road', doc.rs_start.strftime('%d-%b-%Y %H:%M'), :tooltip => 'აქტივაციის თარიღი' %><br/>
+       	  <% end -%>
+       	  <% if doc.rs_end -%>
+       	    <%= icon_text 'ok-sign', doc.rs_end.strftime('%d-%b-%Y %H:%M'), :tooltip => 'დასრულების თარიღი' %>
+       	  <% end -%>
        	</td>
       </tr>
     <% end -%>

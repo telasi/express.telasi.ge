@@ -27,8 +27,9 @@ ExpressTelasiGe::Application.routes.draw do
     scope 'waybills', :controller => :waybills do
       get '/',                :action => :index,      :as => :waybills
       post '/sync',           :action => :sync,       :as => :sync_waybills
-      get '/show/:id',        :action => :show,       :as => :show_waybill
+      get  '/show/:id',       :action => :show,       :as => :show_waybill
       post '/send_to_rs/:id', :action => :send_to_rs, :as => :send_to_rs
+      post '/sync_rs/:id',    :action => :sync_rs,    :as => :sync_rs 
       post '/cancel_rs/:id',  :action => :cancel_rs,  :as => :cancel_rs
       post '/close_rs/:id',   :action => :close_rs,   :as => :close_rs
     end
