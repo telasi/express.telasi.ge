@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h2><%= @user.full_name %> <small><%= mail_to @user.email %> <%= C12.format_mobile(@user.mobile) %></small></h2>
+  <h2><%= @user.full_name %> <small><%= @user.name %></small></h2>
   <% if @user.admin -%>
     <span class="muted"><%= icon_text 'user', 'სისტემური ადმინისტრატორი' %></span>
   <% end -%>
@@ -8,4 +8,20 @@
   <%= link_to icon_text('arrow-left', 'სიაში'), sys_users_url, :class => 'btn' %>
   <%= link_to icon_text('pencil', 'შეცვლა'), sys_edit_user_url(@user), :class => 'btn' %>
   <%= link_to icon_text('trash', 'წაშლა'), sys_delete_user_url(@user), :method => :delete, :class => 'btn', :confirm => 'ნამდვილად გინდათ წაშლა?' %>
+</div>
+
+<div class="row">
+  <div class="span6">
+    <h3>საკონტაქტო ინფორმაცია</h3>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>ელ. ფოსტა</th>
+        <td><%= mail_to @user.email %></td>
+      </tr>
+      <tr>
+        <th>მობილური</th>
+        <td><%= C12.format_mobile(@user.mobile) %></td>
+      </tr>
+    </table>
+  </div>
 </div>

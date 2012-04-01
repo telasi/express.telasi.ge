@@ -6,6 +6,7 @@ module Sys
     include Mongoid::Document
     include Mongoid::Timestamps
     field :email, type: String
+    field :name, type: String
     field :mobile, type: String
     field :admin, type: Boolean
     field :salt, type: String
@@ -13,8 +14,8 @@ module Sys
     field :first_name, type: String
     field :last_name, type: String
 
-    validates_presence_of :email, :mobile
-    validates_uniqueness_of :email
+    validates_presence_of :name, :email, :mobile
+    validates_uniqueness_of :name, :email
     validates_presence_of :first_name, :last_name
     validate :mobile_format, :email_format
     validate :password_presence
@@ -22,6 +23,7 @@ module Sys
     has_and_belongs_to_many :warehouses, :class_name => 'Sys::Warehouse', dependent: :nullify
 
     index :email, :unique => true
+    index :name, :unique => true
     index :first_name
     index :last_name
 
