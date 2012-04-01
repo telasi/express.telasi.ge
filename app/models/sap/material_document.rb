@@ -102,7 +102,7 @@ module Sap
         item.prod_name = doc_item.material_name_ka.maktx
         item.unit_id = RS::WaybillUnit::OTHERS
         unit = doc_item.unit
-        item.unit_name = unit ? unit.mseht : 'ერთეული'
+        item.unit_name = unit ? unit.mseht : '?'
         item.quantity = doc_item.menge
         item.price = 0 #doc_item.dmbtr / item.quantity
         items << item
