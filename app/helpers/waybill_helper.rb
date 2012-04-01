@@ -7,6 +7,8 @@ module WaybillHelper
       'sent'
     elsif doc.rs_closed?
       'closed'
+    elsif doc.rs_canceled?
+      'canceled'
     else
       'common'
     end

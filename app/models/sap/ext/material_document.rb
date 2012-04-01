@@ -39,10 +39,14 @@ module Sap
         self.rs_id and self.rs_status == RS::Waybill::STATUS_CLOSED
       end
 
+      def rs_canceled?
+        self.rs_id and self.rs_status == RS::Waybill::STATUS_DEACTIVATED
+      end
+
       def sync_waybill!(waybill_id = nil)
         id = waybill_id || self.rs_id
         wb = RS.get_waybill('waybill_id' => id, 'su' => Express::SU, 'sp' => Express::SP) if id
-        if wb.nil? or (wb.status == RS::Waybill::STATUS_DELETED or wb.status == RS::Waybill::STATUS_DEACTIVATED)
+        if wb.nil? #or (wb.status == RS::Waybill::STATUS_DELETED or wb.status == RS::Waybill::STATUS_DEACTIVATED)
           self.rs_id = nil
           self.rs_number = nil
           self.rs_status = RS::Waybill::STATUS_SAVED
@@ -90,6 +94,8 @@ module Sap
           'road'
         when RS::Waybill::STATUS_CLOSED
           'ok-sign'
+        when RS::Waybill::STATUS_DEACTIVATED
+          'remove-sign'
         else
           'map-marker'
         end
