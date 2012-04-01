@@ -103,7 +103,7 @@ module Sap
         item.unit_id = RS::WaybillUnit::OTHERS
         item.unit_name = doc_item.meins
         item.quantity = doc_item.menge
-        item.price = doc_item.dmbtr / item.quantity
+        item.price = 0 #doc_item.dmbtr / item.quantity
         items << item
       end
       waybill.items = items

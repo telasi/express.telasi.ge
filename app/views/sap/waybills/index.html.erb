@@ -27,7 +27,7 @@
   </thead>
   <tbody>
     <% @docs.each do |doc| -%>
-      <tr>
+      <tr class="<%= doc.rs_sent? ? 'sent' : ( doc.rs_closed? ? 'closed' : 'common') %>">
         <td class="center">
           <%= icon_text(doc.type_icon, nil, :tooltip => doc.type_text) %><br/>
           <%= icon_text(doc.rs_status_icon, nil, :tooltip => doc.rs_status_text) %>

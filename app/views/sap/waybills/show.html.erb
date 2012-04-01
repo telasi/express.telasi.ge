@@ -1,133 +1,31 @@
 <div class="page-header">
-  <h2>სასაქონლო ზედნადები</h2>
+  <h2>
+    <%= tooltiped_text @doc.mblnr, 'MIGO-ს ნომერი' %>
+    <% if @doc.rs_number -%>
+  	  <small>ს/ზ №<%= tooltiped_text @doc.rs_number, 'ზედნადების ნომერი' %></small></h2>
+  	<% end -%>
 </div>
 
 <div class="btn-toolbar">
   <%= link_to icon_text('arrow-left', 'სიაში'), sap_waybills_url, :class => 'btn' %>
   <% if @doc.rs_status == RS::Waybill::STATUS_SAVED -%>
-    <%= link_to icon_text('share', 'გადავაგზავნო საგადასახადო პორტალში'), sap_send_to_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ გადაგზავნა?', :class => 'btn' %>
+    <% if @waybill.valid? %>
+      <%= link_to icon_text('share', 'გადავაგზავნო საგადასახადო პორტალში'), sap_send_to_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ გადაგზავნა?', :class => 'btn' %>
+    <% end %>
   <% elsif @doc.rs_status == RS::Waybill::STATUS_ACTIVE -%>
     <%= link_to icon_text('ok-sign', 'დასრულება', :white => true), sap_close_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების დასრულება? დასრულებული ზედნადების შეცვლა შეუძლებელი იქნება!', :class => ['btn', 'btn-success'] %>
     <%= link_to icon_text('remove-sign', 'გაუქმება', :white => true), sap_cancel_rs_url(@doc), :method => :post, :confirm => 'ნამდვილად გინდათ ზედნადების გაუქმება?', :class => ['btn', 'btn-danger'] %>
   <% end -%>
 </div>
 
-<div class="waybill-data">
-  <div class="sender-receiver row">
-    <div class="span6">
-      <h3>გამყიდველი (გამგზავნი)</h3>
-      <table class="table table-striped table-bordered">
-        <tr>
-          <th width="150">საიდენტ. კოდი</th>
-          <td><%= @waybill.seller_tin %></td>
-        </tr>
-        <tr>
-          <th>დასახელება</th>
-          <td><%= @waybill.seller_name %></td>
-        </tr>
-        <tr>
-          <th>დაწყების ადგილი</th>
-          <td><%= @waybill.start_address %></td>
-        </tr>
-        <tr>
-          <th>ტვირთის გამგზავნი</th>
-          <td><%= @waybill.seller_info %> <span class="muted"><%= @sap_doc.driver_info.perno %></span></td>
-        </tr>
-      </table>
-    </div>
-    <div class="span6">
-      <h3>მყიდველი (მიმღები)</h3>
-      <table class="table table-striped table-bordered">
-        <tr>
-          <th width="150">საიდენტ. კოდი</th>
-          <td><%= @waybill.buyer_tin %></td>
-        </tr>
-        <tr>
-          <th>დასახელება</th>
-          <td><%= @waybill.buyer_name %></td>
-        </tr>
-        <tr>
-          <th>დასრულების ადგილი</th>
-          <td><%= @waybill.end_address %></td>
-        </tr>
-        <tr>
-          <th>ტვირთის მიმღები</th>
-          <td><%= @waybill.buyer_info %> <span class="muted"><%= @sap_doc.driver_info.pernopo %></span></td>
-        </tr>
-      </table>
-    </div>
+<% unless @waybill.valid? -%>
+  <div class="label label-block label-important normal-size">
+    <ul>
+      <% @waybill.validation_errors.each do |k, v| -%>
+        <li><%= k %>: <%= v %></li>
+      <% end -%>
+    </ul>
   </div>
-  <div class="transport-data row">
-    <div class="span6">
-      <h3>ტრანსპორტირების მონაცემები</h3>
-      <table class="table table-striped table-bordered">
-        <tr>
-          <th width="150">ზედნადების ტიპი</th>
-          <td><%= RS::WaybillType::NAMES[@waybill.type] %></td>
-        </tr>
-        <tr>
-          <th width="150">ტრანსპორტ. სახე</th>
-          <td>
-            <%= RS::TransportType::NAMES[@waybill.transport_type_id] %>
-            <span class="muted"><%= @waybill.transport_type_name %></span>
-          </td>
-        </tr>
-        <tr>
-          <th width="150">მანქანის ნომერი</th>
-          <td><%= @waybill.car_number %></td>
-        </tr>
-        <tr>
-          <th width="150">მძღოლი</th>
-          <td><%= @waybill.driver_tin %> <span class="muted"><%= @waybill.driver_name %></span></td>
-        </tr>
-      </table>
-    </div>
-    <div class="span6">
-      <h3>ზედნადების სტატუსი</h3>
-      <table class="table table-striped table-bordered">
-        <tr>
-          <th width="150">SAP ნომერი</th>
-          <td><%= @doc.mblnr %></td>
-        </tr>
-        <tr>
-          <th>შეკვეთის სტატუსი</th>
-          <td><%= icon_text(@doc.rs_status_icon, nil, :tooltip => @doc.rs_status_text) %> <%= @doc.rs_status_text %></td>
-        </tr>
-        <tr>
-          <th>RS.GE-ს ნომერი</th>
-          <td>
-            <% if @doc.rs_number -%>
-             <span class="label label-info"><%= @doc.rs_number %></span> <%= @doc.rs_start %>
-            <% end -%>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="items">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>საქონლის დასახელება</th>
-          <th width="100">შტრიხ-კოდი</th>
-          <th width="100">ზომის ერთეული</th>
-          <th width="100">რაოდენობა</th>
-          <th width="100">ერთეულის ფასი</th>
-          <th width="100">საქონლის ფასი</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @waybill.items.each do |item| -%>
-          <tr>
-            <td><%= item.prod_name %></td>
-            <td class="center"><%= item.bar_code %></td>
-            <td class="center"><%= item.unit_name %></td>
-            <td class="right"><%= C12.number_format item.quantity, 5 %></td>
-            <td class="right"><%= C12.number_format item.price, 2 %></td>
-            <td class="right"><%= C12.number_format item.quantity * item.price, 2 %></td>
-          </tr>
-        <% end -%>
-      </tbody>
-    </table>
-  </div>
-</div>
+<% end -%>
+
+<%= render :partial => 'sap/waybills/waybill' %>
