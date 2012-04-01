@@ -102,7 +102,7 @@ module Sap
         when RS::Waybill::STATUS_CLOSED
           'დასრულებული'
         else
-          'წინასწარი'
+          'გადაუგზავნელი'
         end
       end
     end

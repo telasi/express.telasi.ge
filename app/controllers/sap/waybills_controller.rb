@@ -36,6 +36,10 @@ module Sap
         elsif doc
           doc.destroy
         end
+        # სტორნოზე შემოწმება
+        if doc and doc.storno and doc.rs_id.nil?
+          doc.destroy
+        end
       end
       redirect_to sap_waybills_url, :notice => 'სინქრონიზაცია დასრულებულია.'
     end

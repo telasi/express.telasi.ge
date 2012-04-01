@@ -36,12 +36,12 @@ module Sap
     end
 
     def storno?
-      storno_num = self.items.first.smbln
-      storno_num and not storno_num.strip.empty?
+      not Sap::MaterialItem.where(:smbln => self.mblnr, :mandt => self.mandt).all.empty?
     end
 
     def waybill_document?
-      self.inner? # or self.sale? # or self.purchase? or self.return? -- XXXX
+      item = self.items.first
+      self.inner? and self.driver_info.doc_type != '3' and item.werks != '1300' # or self.sale? # or self.purchase? or self.return? -- XXXX
     end
 
     def to_waybill
