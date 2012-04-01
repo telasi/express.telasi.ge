@@ -23,7 +23,7 @@
 </div>
 
 <% unless @waybill.valid? -%>
-  <div class="label label-block label-important normal-size">
+  <div class="alert alert-block alert-important">
     <ul>
       <% @waybill.validation_errors.each do |k, v| -%>
         <li><%= k %>: <%= v %></li>
