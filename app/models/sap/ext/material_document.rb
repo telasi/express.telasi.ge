@@ -107,6 +107,8 @@ module Sap
           'აქტივირებული'
         when RS::Waybill::STATUS_CLOSED
           'დასრულებული'
+        when RS::Waybill::STATUS_DEACTIVATED
+          'გაუქმებული'
         else
           'გადაუგზავნელი'
         end

@@ -37,7 +37,7 @@ module Sap
           doc.destroy
         end
         # სტორნოზე შემოწმება
-        if doc and doc.storno and doc.rs_id.nil?
+        if doc and doc.storno and (doc.rs_id.nil? or doc.rs_canceled?)
           doc.destroy
         end
       end

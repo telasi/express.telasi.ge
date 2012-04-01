@@ -70,21 +70,26 @@
     </div>
     <div class="span6">
       <h3>ზედნადების სტატუსი</h3>
-      <table class="table table-striped table-bordered">
-        <tr>
+      <table class="table table-striped table-bordered waybills">
+        <tr class="<%= waybill_class(@doc) %>">
           <th width="150">SAP ნომერი</th>
           <td><%= @doc.mblnr %></td>
         </tr>
-        <tr>
+        <tr class="<%= waybill_class(@doc) %>">
           <th>შეკვეთის სტატუსი</th>
           <td><%= icon_text(@doc.rs_status_icon, nil, :tooltip => @doc.rs_status_text) %> <%= @doc.rs_status_text %></td>
         </tr>
-        <tr>
+        <tr class="<%= waybill_class(@doc) %>">
           <th>RS.GE-ს ნომერი</th>
           <td>
             <% if @doc.rs_number -%>
-             <span class="badge badge-info"><%= @doc.rs_number %></span>
-             <%= @doc.rs_start.strftime('%d-%b-%Y %H:%M') %>
+             <span class="badge badge-success"><%= @doc.rs_number %></span>
+             <% if @doc.rs_start -%>
+               <br/><%= icon_text 'road', @doc.rs_start.strftime('%d-%b-%Y %H:%M') %>
+             <% end -%>
+             <% if @doc.rs_end -%>
+               <br/><%= icon_text 'ok-sign', @doc.rs_end.strftime('%d-%b-%Y %H:%M') %>
+             <% end -%>
             <% end -%>
           </td>
         </tr>
