@@ -91,8 +91,8 @@ module Sap
           waybill.driver_name = self.driver_info.driver
           waybill.driver_tin = self.driver_info.drperno
           waybill.check_driver_tin  = true
-        elsif waybill.start_address == waybill.end_address
-          waybill.type = RS::WaybillType::WITHOUT_TRANSPORTATION
+        #elsif waybill.start_address == waybill.end_address
+        #  waybill.type = RS::WaybillType::WITHOUT_TRANSPORTATION
         else
           waybill.transport_type_id = RS::TransportType::OTHERS
           waybill.transport_type_name = 'თვითგადაზიდვა'
