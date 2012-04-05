@@ -15,6 +15,9 @@ require 'mongoid-rspec'
 require 'capybara/rspec'
 require 'factory_girl'
 
+Savon.log = false
+HTTPI.log = false
+
 RSpec.configure do |config|
   # ## Mock Framework
   #

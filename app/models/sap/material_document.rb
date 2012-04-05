@@ -59,13 +59,22 @@ module Sap
       end
 
       if self.inner?
-        waybill.type            = RS::WaybillType::INNER
         waybill.seller_id       = Express::TELASI_PAYER_ID
         waybill.seller_tin      = Express::TELASI_TIN
         waybill.seller_name     = Express::TELASI_NAME
         waybill.check_buyer_tin = true
-        waybill.buyer_tin       = Express::TELASI_TIN
-        waybill.buyer_name      = Express::TELASI_NAME
+        if auto.werks == '1200'
+          waybill.type            = RS::WaybillType::TRANSPORTATION
+          item = Sap::InvoiceItem.where(:ebeln => auto.ebeln, :mandt => auto.mandt).first
+          address = Sap::Address.find(item.adrn2)
+          address_text = Sap::AddressText.where(:client => Express::Sap::MANDT, :addrnumber => item.adrn2, :langu => Express::Sap::LANG_KA).first
+          waybill.buyer_name = address.name1
+          waybill.buyer_tin = address_text.remark
+        else
+          waybill.type            = RS::WaybillType::INNER
+          waybill.buyer_tin       = Express::TELASI_TIN
+          waybill.buyer_name      = Express::TELASI_NAME
+        end
       else
         raise RuntimeError.new("not supported")
       end

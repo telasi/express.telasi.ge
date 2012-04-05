@@ -42,7 +42,7 @@ describe 'მასალის დოკუმენტის ამოღე�
         its(:quantity) { should == 10 }
         its(:unit_id) { should == RS::WaybillUnit::OTHERS }
         its(:bar_code) { should == '300001495' }
-        its(:unit_name) { should == 'ST' }
+        its(:unit_name) { should == 'ცალი' }
         its(:price) { should == 0 }
       end
     end

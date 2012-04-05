@@ -6,6 +6,8 @@ describe Sys::User do
   it { should be_timestamped_document }
   it { should have_field(:email).of_type(String) }
   it { should have_field(:admin).of_type(Boolean) }
+  it { should have_field(:sap).of_type(Boolean) }
+  it { should have_field(:accountant).of_type(Boolean) }
   it { should have_field(:salt).of_type(String) }
   it { should have_field(:hashed_password).of_type(String) }
   it { should have_field(:first_name).of_type(String) }
@@ -20,7 +22,7 @@ end
 
 describe 'მომხმარებლის შექმნა' do
   before(:all) do
-    @admin = FactoryGirl.create('sys/user', :mobile => '(595)335514', :email => 'dimitri@c12.ge')
+    @admin = FactoryGirl.create('sys/user', :mobile => '(595)335514', :email => 'dimitri@c12.ge', :name => 'admin')
   end
   subject { @admin }
   its(:admin) { should == true }
@@ -31,7 +33,7 @@ describe 'მომხმარებლის შექმნა' do
   its(:hashed_password) { should_not be_empty }
   context 'მეორე მომხმარებლის დამატება' do
     before(:all) do
-      @user = FactoryGirl.create('sys/user', :mobile => '(595)335588', :email => 'dimakura@gmail.com')
+      @user = FactoryGirl.create('sys/user', :mobile => '(595)335588', :email => 'dimakura@gmail.com', :name => 'dimitri')
     end
     subject { @user }
     its(:admin) { should == false }

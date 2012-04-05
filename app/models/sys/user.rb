@@ -9,6 +9,8 @@ module Sys
     field :name, type: String
     field :mobile, type: String
     field :admin, type: Boolean
+    field :sap, type: Boolean
+    field :accountant, type: Boolean
     field :salt, type: String
     field :hashed_password, type: String
     field :first_name, type: String

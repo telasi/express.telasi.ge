@@ -3,6 +3,7 @@ include Sys
 
 FactoryGirl.define do
   factory 'sys/user' do
+    name       'dimitri'
     email      'dimitri@c12.ge'
     password   'secret'
     mobile     '595335514'
