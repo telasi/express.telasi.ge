@@ -7,9 +7,7 @@
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th width="16"></th>
-      <th width="100">მომხმარებელი</th>
-      <th>სახელი, გვარი</th>
+      <th>მომხმარებელი</th>
       <th width="200">ელ.ფოსტა</th>
       <th width="200">მობილური</th>
       <th width="50" class="center"><%= icon_text 'cog', nil, :tooltip => 'მოქმედებები' %></th>
@@ -18,9 +16,11 @@
   <tbody>
     <% @users.each do |user| -%>
       <tr>
-        <td class="center"><%= icon_text('user', nil, :tooltip => 'სისადმინი') if user.admin %></td>
-        <td><%= link_to user.name, sys_show_user_url(user) %></td>
-        <td><%= user.full_name %></td>
+        <td>
+        	<%= link_to user.name, sys_show_user_url(user) %>
+        	<span class="muted"><%= user.full_name %></span>
+        	<%= roles(user) %>
+        </td>
         <td><%= mail_to user.email %></td>
         <td><%= C12.format_mobile(user.mobile) %></td>
         <td class="center">

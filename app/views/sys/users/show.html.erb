@@ -1,8 +1,6 @@
 <div class="page-header">
   <h2><%= @user.full_name %> <small><%= @user.name %></small></h2>
-  <% if @user.admin -%>
-    <span class="muted"><%= icon_text 'user', 'სისტემური ადმინისტრატორი' %></span>
-  <% end -%>
+  <div class="roles"><%= roles(@user) %></div> 
 </div>
 <div class="btn-toolbar">
   <%= link_to icon_text('arrow-left', 'სიაში'), sys_users_url, :class => 'btn' %>
