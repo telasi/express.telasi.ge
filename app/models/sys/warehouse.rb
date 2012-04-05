@@ -4,8 +4,8 @@ module Sys
     include Mongoid::Document
     include Mongoid::Timestamps
     field :name, type: String
-    field :werks
-    field :lgort
+    field :werks, type: String
+    field :lgort, type: String
 
     validates_presence_of :werks
     validates_presence_of :lgort
@@ -21,14 +21,12 @@ module Sys
 
     # ეძებს საწყობებს მოცემული ტექსტის მიხედვით.
     def self.by_query(q)
-      criteria = Mongoid::Criteria.new(Sys::Warehouse)
       unless q.blank?
-        q.split.each do |word|
-          criteria = criteria.or(:lgort => /#{word}/).or(:werks => /#{word}/)
-        end
+        array = q.split.map{ |w| { '$or' => [{:name => /#{w}/i}, {:lgort => /#{w}/i}, {:werks => /#{w}/i}]} }
+        where('$and' => array)
+      else
+        where
       end
-      criteria
     end
-
   end
 end

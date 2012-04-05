@@ -3,7 +3,8 @@ module Sys
   class WarehouseController < SysController
     def index
       @title = 'საწყობები'
-      @warehouses = Sys::Warehouse.by_query(params[:q]).asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 10)
+      @query = current_query
+      @warehouses = Sys::Warehouse.by_query(@query).asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 10)
       if request.xhr?
         render :partial => 'sys/warehouse/list'
       end
@@ -64,12 +65,16 @@ module Sys
 
     private
 
+    def current_query
+      current_param('warehouse', 'q')
+    end
+
     def next_warehouse(w)
-      Sys::Warehouse.where(:werks.gte => w.werks, :lgort.gte => w.lgort, :_id.ne => w.id).asc(:werks, :lgort).first
+      Sys::Warehouse.by_query(current_query).where(:werks.gte => w.werks, :lgort.gte => w.lgort, :_id.ne => w.id).asc(:werks, :lgort).first
     end
 
     def prev_warehouse(w)
-      Sys::Warehouse.where(:werks.lte => w.werks, :lgort.lte => w.lgort, :_id.ne => w.id).desc(:werks, :lgort).first
+      Sys::Warehouse.by_query(current_query).where(:werks.lte => w.werks, :lgort.lte => w.lgort, :_id.ne => w.id).desc(:werks, :lgort).first
     end
   end
 end

@@ -16,12 +16,12 @@ class ApplicationController < ActionController::Base
     @__user
   end
 
-  def current_param(class_name, name, def_val)
+  def current_param(class_name, name, def_val = nil)
     @__curr_hash = @__curr_hash || {}
     unless @__curr_hash.include?(name)
       if params[name]
         @__curr_hash[name] = params[name]
-        Sys::Preference.set(current_user, "#{class_name}_#{name}", params[:date])
+        Sys::Preference.set(current_user, "#{class_name}_#{name}", params[name])
       else
         txt = Sys::Preference.get(current_user, "#{class_name}_#{name}")
         if txt and not txt.strip.empty?

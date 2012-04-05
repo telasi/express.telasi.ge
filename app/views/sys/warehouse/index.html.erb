@@ -10,7 +10,9 @@
   <%= link_to icon_text('refresh', 'სინქრონიზაცია'), sys_sync_warehouses_url, :class => 'btn', :method => :post, :confirm => 'ნმადვილად გინდათ სინქრონიზაცია?' %>
   <%= link_to icon_text('plus', 'საწყობის დამატება'), sys_new_warehouse_url, :class => 'btn' %>
   <div class="pull-right">
-    <input type="text" id="search" autofocus="true" placeholder="საწყობის ძებნა" />
+    <input type="text" id="search" autofocus="true" placeholder="საწყობის ძებნა" value="<%= @query %>" />
   </div> 
 </div>
+<div id="result">
 <%= render :partial => 'sys/warehouse/list' %>
+</div>
