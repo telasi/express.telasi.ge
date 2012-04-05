@@ -7,6 +7,8 @@
   <%= f.input :first_name, :label => 'სახელი' %>
   <%= f.input :last_name, :label => 'გვარი' %>
   <%= f.input :admin, :as => :boolean, :label => 'სისადმინია?' %>
+  <%= f.input :sap, :as => :boolean, :label => 'SAP კონსულტანტი?' %>
+  <%= f.input :warehouse_admin, :as => :boolean, :label => 'საწყობის გამგე?' %>
   <div class="form-actions">
   	<%= f.button :submit, @user.new? ? 'შექმნა' : 'შეცვლა', :class => ['btn-primary'] %>
   	<%= link_to 'გაუქმება', @user.new? ? sys_users_url : sys_show_user_url(@user), :class => 'btn' %>

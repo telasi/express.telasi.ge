@@ -7,7 +7,7 @@ describe Sys::User do
   it { should have_field(:email).of_type(String) }
   it { should have_field(:admin).of_type(Boolean) }
   it { should have_field(:sap).of_type(Boolean) }
-  it { should have_field(:accountant).of_type(Boolean) }
+  it { should have_field(:warehouse_admin).of_type(Boolean) }
   it { should have_field(:salt).of_type(String) }
   it { should have_field(:hashed_password).of_type(String) }
   it { should have_field(:first_name).of_type(String) }
@@ -26,6 +26,8 @@ describe 'მომხმარებლის შექმნა' do
   end
   subject { @admin }
   its(:admin) { should == true }
+  its(:sap) { should == false }
+  its(:warehouse_admin) { should == false }
   its(:mobile) { should == '595335514' }
   its(:salt) { should_not be_nil }
   its(:salt) { should_not be_empty }
@@ -37,6 +39,8 @@ describe 'მომხმარებლის შექმნა' do
     end
     subject { @user }
     its(:admin) { should == false }
+    its(:sap) { should == false }
+    its(:warehouse_admin) { should == false }
   end
 end
 

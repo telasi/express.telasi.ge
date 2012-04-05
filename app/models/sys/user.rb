@@ -10,7 +10,7 @@ module Sys
     field :mobile, type: String
     field :admin, type: Boolean
     field :sap, type: Boolean
-    field :accountant, type: Boolean
+    field :warehouse_admin, type: Boolean
     field :salt, type: String
     field :hashed_password, type: String
     field :first_name, type: String
@@ -74,7 +74,9 @@ module Sys
 
     def user_before_create
       first = User.count == 0
-      self.admin = first
+      self.admin = first ? true : (not not self.admin)
+      self.sap = (not not self.sap)
+      self.warehouse_admin = (not not self.warehouse_admin)
       self.mobile = C12.compact_mobile(self.mobile)
     end
   end
