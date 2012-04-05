@@ -1,0 +1,27 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>დასახელება</th>
+      <th width="150">SAP-ის პარამეტრები</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @warehouses.each do |wh| -%>
+      <tr>
+        <td>
+          <%= link_to wh.name, sys_show_warehouse_url(wh) %>
+          <% if wh.users.any? -%>
+            <span class="muted">&rarr;
+              <%= (wh.users.map {|u| u.full_name}).join(', ')%>
+            </span>
+          <% end -%>
+        </td>
+        <td>
+      	  <%= tooltiped_text wh.werks, 'WERKS', :left %>
+      	  <span class="muted"><%= tooltiped_text wh.lgort, 'LGORT', :right %></span>
+      	</td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+<%= paginate @warehouses %>

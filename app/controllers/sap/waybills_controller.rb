@@ -95,21 +95,7 @@ module Sap
     private
 
     def current_date
-      unless @__date_initialized
-        if params[:date]
-          @__date = Date.strptime(params[:date], '%d-%b-%Y')
-          Sys::Preference.set(current_user, 'waybill_date', params[:date])
-        else
-          txt = Sys::Preference.get(current_user, 'waybill_date')
-          if txt and not txt.strip.empty?
-            @__date = Date.strptime(txt, '%d-%b-%Y')
-          else
-            @__date = Date.today
-          end
-        end
-        @__date_initialized = true
-      end
-      @__date
+      Date.strptime(current_param('waybill', 'date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
     end
   end
 end

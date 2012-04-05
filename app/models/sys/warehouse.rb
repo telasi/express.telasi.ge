@@ -18,5 +18,17 @@ module Sys
     def sap_warehouse
       Sap::Warehouse.where(:mandt => Express::Sap::MANDT, :werks => self.werks, :lgort => self.lgort).first
     end
+
+    # ეძებს საწყობებს მოცემული ტექსტის მიხედვით.
+    def self.by_query(q)
+      criteria = Mongoid::Criteria.new(Sys::Warehouse)
+      unless q.blank?
+        q.split.each do |word|
+          criteria = criteria.or(:lgort => /#{word}/).or(:werks => /#{word}/)
+        end
+      end
+      criteria
+    end
+
   end
 end

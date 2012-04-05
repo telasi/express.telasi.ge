@@ -3,7 +3,10 @@ module Sys
   class WarehouseController < SysController
     def index
       @title = 'საწყობები'
-      @warehouses = Sys::Warehouse.asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 10)
+      @warehouses = Sys::Warehouse.by_query(params[:q]).asc(:werks, :lgort).paginate(:page => params[:page], :per_page => 10)
+      if request.xhr?
+        render :partial => 'sys/warehouse/list'
+      end
     end
 
     def add_user
@@ -62,11 +65,11 @@ module Sys
     private
 
     def next_warehouse(w)
-      Sys::Warehouse.all_of(:werks.gte => w.werks, :lgort.gte => w.lgort, :_id.ne => w.id).asc(:werks, :lgort).first
+      Sys::Warehouse.where(:werks.gte => w.werks, :lgort.gte => w.lgort, :_id.ne => w.id).asc(:werks, :lgort).first
     end
 
     def prev_warehouse(w)
-      Sys::Warehouse.all_of(:werks.lte => w.werks, :lgort.lte => w.lgort, :_id.ne => w.id).desc(:werks, :lgort).first
+      Sys::Warehouse.where(:werks.lte => w.werks, :lgort.lte => w.lgort, :_id.ne => w.id).desc(:werks, :lgort).first
     end
   end
 end
