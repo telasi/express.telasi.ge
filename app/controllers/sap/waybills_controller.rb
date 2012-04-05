@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 module Sap
-  class WaybillsController < ApplicationController
+  class WaybillsController < SapController
     def index
       @title = 'ზედნადებები'
       @date = current_date
