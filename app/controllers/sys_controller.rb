@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class SysController < ApplicationController
   def auth?
-    true
+    Sys::User.count > 0
   end
 
   def admin?
