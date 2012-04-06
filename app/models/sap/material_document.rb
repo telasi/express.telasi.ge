@@ -41,7 +41,7 @@ module Sap
 
     def waybill_document?
       item = self.items.first
-      self.inner? and self.driver_info.doc_type != '3' and item.werks != '1300' # or self.sale? # or self.purchase? or self.return? -- XXXX
+      self.inner? and (self.driver_info and self.driver_info.doc_type != '3') and item.werks != '1300' # or self.sale? # or self.purchase? or self.return? -- XXXX
     end
 
     def to_waybill
