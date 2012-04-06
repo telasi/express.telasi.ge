@@ -63,6 +63,16 @@ module Sys
       @prev = prev_warehouse(@warehouse)
     end
 
+    protected
+
+    def admin?
+      false
+    end
+
+    def sap?
+      true
+    end
+
     private
 
     def current_query

@@ -22,10 +22,19 @@ module Sap
       field :rs_status, type: Integer, default: RS::Waybill::STATUS_SAVED
       field :rs_start,  type: Time
       field :rs_end,    type: Time
-      belongs_to :warehouse, :class_name => 'Sys::Warehouse'
+      belongs_to              :warehouse, :class_name => 'Sys::Warehouse'
+      has_and_belongs_to_many :users,     :class_name => 'Sys::User'
 
       index [[:mblnr, Mongo::ASCENDING], [:mjahr, Mongo::ASCENDING]]
       index :date
+
+      def self.by_user(user)
+        if user.sap or user.warehouse_admin
+          where
+        else
+          all_in(user_ids: [user.id])
+        end
+      end
 
       def sap_doc
         Sap::MaterialDocument.where(:mblnr => self.mblnr, :mjahr => self.mjahr, :mandt => Express::Sap::MANDT).first

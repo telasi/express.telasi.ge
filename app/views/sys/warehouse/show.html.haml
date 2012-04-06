@@ -1,13 +1,12 @@
 :javascript
-	var url = '#{sys_add_warehouse_user_url(@warehouse)}';
 	$(function() {
 		$('.user').change(function(data) {
 			var target = $(data.target);
 			var user_id = target.attr('data-user');
 			var assign = target.is(':checked');
-			console.log(assign);
+			//console.log(assign);
 			var data = { 'user_id': user_id, 'assign': assign };
-			$.post(url, data, function(data) {});
+			$.post('#{sys_add_warehouse_user_url(@warehouse)}', data, function(data) {});
 		});
 	});
 .page-header
@@ -38,6 +37,6 @@
 %h3 მომხმარებლები
 .row
 	- @users.each do |user|
-		.span3
+		.span4
 			%input.user{ :type => :checkbox, :id => "user_#{user.id}", 'data-user' => user.id, :checked => @warehouse.users.include?(user) }
-			%label{ :for => "user_#{user.id}", :style => 'display: inline;' }= user.full_name
+			%label{ :for => "user_#{user.id}", :style => 'display: inline;' } #{user.name} <span class="muted">#{user.full_name}</span>

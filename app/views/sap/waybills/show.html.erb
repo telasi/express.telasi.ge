@@ -36,3 +36,9 @@
 <% end -%>
 
 <%= render :partial => 'sap/waybills/waybill' %>
+
+<div class="users">
+<h3>მომხმარებლები <small>რომლებსაც შეუძლია ამ დოკუმენტთან მუშაობა</small></h3>
+<span class="badge badge-info"><%= @doc.warehouse.werks %> <%= @doc.warehouse.lgort %></span>
+<%= @doc.users.map{|u| %Q{#{u.name.upcase} <span class="muted">#{u.full_name}</span>} }.join(', ').html_safe %>
+</div>

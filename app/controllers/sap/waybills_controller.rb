@@ -4,7 +4,7 @@ module Sap
     def index
       @title = 'ზედნადებები'
       @date = current_date
-      @docs = Sap::Ext::MaterialDocument.where(:date => @date).asc(:mblnr)
+      @docs = Sap::Ext::MaterialDocument.by_user(current_user).where(:date => @date).asc(:mblnr)
     end
 
     def sync
@@ -31,6 +31,7 @@ module Sap
           item = sap_doc.items.first
           warehouse = Sys::Warehouse.where(:werks => item.werks, :lgort => item.lgort).first
           doc.warehouse = warehouse
+          doc.users = warehouse.users
           # save document
           doc.save!
         elsif doc
