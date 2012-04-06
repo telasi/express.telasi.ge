@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class SiteController < ApplicationController
+class SiteController < ApplicationController 
   def index
     @title = 'საწყისი'
   end

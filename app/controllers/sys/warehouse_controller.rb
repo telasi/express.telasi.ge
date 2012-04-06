@@ -66,7 +66,7 @@ module Sys
     protected
 
     def admin?
-      false
+      true
     end
 
     def sap?

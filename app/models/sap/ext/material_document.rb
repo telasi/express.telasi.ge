@@ -29,7 +29,7 @@ module Sap
       index :date
 
       def self.by_user(user)
-        if user.sap or user.warehouse_admin
+        if user.sap or user.warehouse_admin or user.admin
           where
         else
           all_in(user_ids: [user.id])

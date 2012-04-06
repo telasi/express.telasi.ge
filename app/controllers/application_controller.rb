@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :authentication_filter
 
   DATE_FORMAT = '%d-%b-%Y'
 
@@ -33,4 +34,45 @@ class ApplicationController < ActionController::Base
     end
     @__curr_hash[name]
   end
+
+  def auth?
+    false
+  end
+
+  def admin?
+    false
+  end
+
+  def sap?
+    false
+  end
+
+  def warehouse_admin?
+    false
+  end
+
+  def no_role?
+    false
+  end
+
+  private
+
+  def authentication_filter
+    if not auth?
+      # ok
+    elsif auth? and current_user.nil?
+      redirect_to home_url, :notice => 'გაიარეთ ავტორიზაცია'
+    elsif auth? and admin? and current_user.admin
+      # ok
+    elsif auth? and sap?   and current_user.sap
+      # ok
+    elsif auth? and warehouse_admin? and current_user.warehouse_admin
+      # ok
+    elsif auth? and no_role?
+      # ok
+    else
+      redirect_to home_url, :notice => 'არ გაქვთ შესაბამისი უფლება'
+    end
+  end
+
 end

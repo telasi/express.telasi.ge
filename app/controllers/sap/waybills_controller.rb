@@ -93,6 +93,10 @@ module Sap
       redirect_to sap_show_waybill_url(doc), :notice => 'ზედნადები გაუქმებულია.'
     end
 
+    def no_role?
+      true
+    end
+    
     private
 
     def current_date
