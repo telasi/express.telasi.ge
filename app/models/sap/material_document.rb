@@ -68,8 +68,11 @@ module Sap
           item = Sap::InvoiceItem.where(:ebeln => auto.ebeln, :mandt => auto.mandt).first
           address = Sap::Address.find(item.adrn2)
           address_text = Sap::AddressText.where(:client => Express::Sap::MANDT, :addrnumber => item.adrn2, :langu => Express::Sap::LANG_KA).first
-          waybill.buyer_name = address.name1
-          waybill.buyer_tin = address_text.remark
+          #waybill.buyer_name = address.name1
+          #waybill.buyer_tin  = address_text.remark
+          waybill.buyer_tin       = Express::TELASI_TIN
+          waybill.buyer_name      = Express::TELASI_NAME
+          waybill.comment         = "გატანილია #{address.name1}-ის მიერ"
         else
           waybill.type            = RS::WaybillType::INNER
           waybill.buyer_tin       = Express::TELASI_TIN
@@ -80,15 +83,16 @@ module Sap
       end
 
       # საწყისი და საბოლოო მისამართის განსაზღვრა
-      if self.return?
-        address1 = not_auto.warehouse_address if not_auto
-        address2 = auto.warehouse_address if auto
-      else
-        address1 = not_auto.warehouse_address if not_auto
-        address2 = not_auto.invoice_address if not_auto
-      end
-      waybill.start_address = address1.address.to_s if address1
-      waybill.end_address = address2.address.to_s if address2
+      
+        if self.return?
+          address1 = not_auto.warehouse_address if not_auto
+          address2 = auto.warehouse_address if auto
+        else
+          address1 = not_auto.warehouse_address if not_auto
+          address2 = not_auto.invoice_address if not_auto
+        end
+        waybill.start_address = address1.address.to_s if address1
+        waybill.end_address = address2.address.to_s if address2
 
       # ტრანსპორტირების პარამეტრების განსაზღვრა
       if self.driver_info

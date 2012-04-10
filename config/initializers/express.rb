@@ -13,5 +13,6 @@ module Express
     KOKRS = 'TLSI'
     LANG_KA = '뱁'
     SCHEMA = 'SAPSR3'
+    BETA = true
   end
 end
