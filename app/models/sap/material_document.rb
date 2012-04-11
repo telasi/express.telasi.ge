@@ -83,7 +83,10 @@ module Sap
       end
 
       # საწყისი და საბოლოო მისამართის განსაზღვრა
-      
+      if Express::Sap::MIGO_2012_APR
+        waybill.start_address = self.driver_info.addr_otp if self.driver_info
+        waybill.end_address   = self.driver_info.addr_pol if self.driver_info
+      else
         if self.return?
           address1 = not_auto.warehouse_address if not_auto
           address2 = auto.warehouse_address if auto
@@ -93,6 +96,7 @@ module Sap
         end
         waybill.start_address = address1.address.to_s if address1
         waybill.end_address = address2.address.to_s if address2
+      end
 
       # ტრანსპორტირების პარამეტრების განსაზღვრა
       if self.driver_info

@@ -23,5 +23,5 @@ sap:
   host:     192.168.1.83
   username: ilia
   password: ilia2012
-  database: erd
-  port:     1527
+  database: erq
+  port:     1537

@@ -9,10 +9,12 @@ module Express
   SP = '123456'
 
   module Sap
-    MANDT = '150'
+    MANDT = '240'
     KOKRS = 'TLSI'
     LANG_KA = '뱁'
     SCHEMA = 'SAPSR3'
-    BETA = true
+
+    # ძალაშია თუ არა MIGO-ს ახალი ფორმა?
+    MIGO_2012_APR = true
   end
 end
