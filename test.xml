@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://tempuri.org/"
+	xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ins0="http://tempuri.org/">
+	<env:Body>
+		<ins0:save_waybill>
+			<ins0:su>telasi01</ins0:su>
+			<ins0:sp>0e85e0c280c94bb105156c27b5db1d3c6e272595</ins0:sp>
+			<ins0:waybill>
+				<WAYBILL>
+					<GOODS_LIST>
+						<GOODS>
+							<ID>0</ID>
+							<W_NAME>მრიცხველი M2X, 10/60</W_NAME>
+							<UNIT_ID>99</UNIT_ID>
+							<UNIT_TXT>ცალი</UNIT_TXT>
+							<QUANTITY>300.0</QUANTITY>
+							<PRICE>0</PRICE>
+							<AMOUNT>0.0</AMOUNT>
+							<BAR_CODE>200001906</BAR_CODE>
+							<A_ID>0</A_ID>
+							<VAT_TYPE>0</VAT_TYPE>
+						</GOODS>
+					</GOODS_LIST>
+					<ID>0</ID>
+					<TYPE>2</TYPE>
+					<BUYER_TIN>202052580</BUYER_TIN>
+					<CHEK_BUYER_TIN>1</CHEK_BUYER_TIN>
+					<BUYER_NAME>ს.ს. თელასი</BUYER_NAME>
+					<START_ADDRESS>ცენტრალური ოფისი ვანის ქ. № 3</START_ADDRESS>
+					<END_ADDRESS>მოსკოვის გამზ.N24ა</END_ADDRESS>
+					<DRIVER_TIN>01029011675</DRIVER_TIN>
+					<CHEK_DRIVER_TIN>1</CHEK_DRIVER_TIN>
+					<DRIVER_NAME>აბრამიანი გიორგი</DRIVER_NAME>
+					<TRANSPORT_COAST>0</TRANSPORT_COAST>
+					<RECEPTION_INFO>ნინო ბოლაშვილი</RECEPTION_INFO>
+					<RECEIVER_INFO>ხეთაგური ლორა</RECEIVER_INFO>
+					<DELIVERY_DATE></DELIVERY_DATE>
+					<STATUS>0</STATUS>
+					<SELER_UN_ID>233505</SELER_UN_ID>
+					<PAR_ID></PAR_ID>
+					<CAR_NUMBER>AER025</CAR_NUMBER>
+					<BEGIN_DATE></BEGIN_DATE>
+					<TRAN_COST_PAYER>1</TRAN_COST_PAYER>
+					<TRANS_ID>1</TRANS_ID>
+					<TRANS_TXT></TRANS_TXT>
+					<COMMENT>გატანილია გეოლიტ,ივესტ-ის მიერ</COMMENT>
+				</WAYBILL>
+			</ins0:waybill>
+		</ins0:save_waybill>
+	</env:Body>
+</env:Envelope>

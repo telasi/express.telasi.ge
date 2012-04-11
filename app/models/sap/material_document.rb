@@ -64,7 +64,8 @@ module Sap
         waybill.seller_name     = Express::TELASI_NAME
         waybill.check_buyer_tin = true
         if auto.werks == '1200'
-          waybill.type            = RS::WaybillType::TRANSPORTATION
+          #waybill.type            = RS::WaybillType::TRANSPORTATION
+          waybill.type            = RS::WaybillType::INNER
           item = Sap::InvoiceItem.where(:ebeln => auto.ebeln, :mandt => auto.mandt).first
           address = Sap::Address.find(item.adrn2)
           address_text = Sap::AddressText.where(:client => Express::Sap::MANDT, :addrnumber => item.adrn2, :langu => Express::Sap::LANG_KA).first
