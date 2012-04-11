@@ -73,7 +73,7 @@ module Sap
           #waybill.buyer_tin  = address_text.remark
           waybill.buyer_tin       = Express::TELASI_TIN
           waybill.buyer_name      = Express::TELASI_NAME
-          waybill.comment         = "გატანილია #{address.name1}-ის მიერ"
+          waybill.comment         = %Q{გატანილია "#{address.name1}"-ის მიერ: (ს/ნ #{address_text.remark if address_text})}
         else
           waybill.type            = RS::WaybillType::INNER
           waybill.buyer_tin       = Express::TELASI_TIN
