@@ -9,7 +9,7 @@ module Express
   SP = '123456'
 
   module Sap
-    MANDT = '240'
+    MANDT = '220' #'240'
     KOKRS = 'TLSI'
     LANG_KA = '뱁'
     SCHEMA = 'SAPSR3'
