@@ -56,7 +56,7 @@ module Sys
     def show
       @warehouse = Sys::Warehouse.find(params[:id])
       @sap_warehouse = @warehouse.sap_warehouse
-      @sap_addresses = @sap_warehouse.addresses
+      @sap_addresses = @sap_warehouse.addresses if @sap_warehouse
       @title = @warehouse.name
       @users = Sys::User.asc(:first_name, :last_name)
       @next = next_warehouse(@warehouse)

@@ -25,15 +25,16 @@
 			%th დასახელება, მისამართი
 			%th{:width => 500} ხარჯის წარმოქმნის ადგილი
 	%tbody
-		- @sap_addresses.each do |address|
-			%tr
-				%td
-					#{address.address.name1}<br/>
-					<span class="muted">#{address.address.to_s}</span>
-				%td
-					#{address.address.floor}<br/>
-					- if address.address.floor and not address.address.floor.strip.empty?
-						<span class="muted">#{address.address.cost_center.ltext}</span>
+		- if @sap_addresses
+			- @sap_addresses.each do |address|
+				%tr
+					%td
+						#{address.address.name1}<br/>
+						<span class="muted">#{address.address.to_s}</span>
+					%td
+						#{address.address.floor}<br/>
+						- if address.address.floor and not address.address.floor.strip.empty?
+							<span class="muted">#{address.address.cost_center.ltext}</span>
 %h3 მომხმარებლები
 .row
 	- @users.each do |user|
