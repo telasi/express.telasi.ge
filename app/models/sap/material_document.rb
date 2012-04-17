@@ -87,7 +87,8 @@ module Sap
       if Express::Sap::MIGO_2012_APR
         waybill.start_address = self.driver_info.addr_otp if self.driver_info
         waybill.end_address   = self.driver_info.addr_pol if self.driver_info
-      else
+      end
+      if not Express::Sap::MIGO_2012_APR or (waybill.start_address.blank? and waybill.end_address.blank?)
         if self.return?
           address1 = not_auto.warehouse_address if not_auto
           address2 = auto.warehouse_address if auto
