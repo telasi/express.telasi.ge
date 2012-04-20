@@ -16,14 +16,14 @@
 </div>
 <div class="well">
   <div class="pull-right btn-group" data-toggle="buttons-checkbox">
-  	<%= link_to icon_text('map-marker'), sap_monitor_url(:start_status => (not @start_status)), :class => ['btn', (@start_status ? 'active' : '')] %>
-  	<%= link_to icon_text('road'), sap_monitor_url(:active_status => (not @active_status)), :class => ['btn', (@active_status ? 'active' : '')] %>
-  	<%= link_to icon_text('ok-sign'), sap_monitor_url(:closed_status => (not @closed_status)), :class => ['btn', (@closed_status ? 'active' : '')] %>
+  	<%= link_to icon_text('map-marker', nil, :tooltip => 'გაუგზავნელი'), sap_monitor_url(:start_status => (not @start_status)), :class => ['btn', (@start_status ? 'active' : '')] %>
+  	<%= link_to icon_text('road', nil, :tooltip => 'აქტივირებული'), sap_monitor_url(:active_status => (not @active_status)), :class => ['btn', (@active_status ? 'active' : '')] %>
+  	<%= link_to icon_text('ok-sign', nil, :tooltip => 'დასრულებული'), sap_monitor_url(:closed_status => (not @closed_status)), :class => ['btn', (@closed_status ? 'active' : '')] %>
   </div>
   <div>
     <input id="start-date" type="text" class="datepicker span2" value="<%= @start_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საწყისი თარიღი">
     <input id="end-date" type="text" class="datepicker span2" value="<%= @end_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საბოლოო თარიღი">
-    <input id="search" type="text" class="span3" value="<%= @q %>" rel="tooltip" data-original-title="საწყობი" autofocus placeholder="საწყობი ან ხარჯის მუხლი...">
+    <input id="search" type="text" class="span3" value="<%= @q %>" rel="tooltip" data-original-title="საწყობი ან ხარჯის მუხლი" autofocus placeholder="საწყობი ან ხარჯის მუხლი...">
   </div>
 </div>
 <div id="result">
