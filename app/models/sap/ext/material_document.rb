@@ -50,7 +50,7 @@ module Sap
       end
 
       def self.by_warehouses(warehouses)
-        if warehouses and warehouses.any?
+        if warehouses
           where(:warehouse_id => {'$in' => warehouses})
         else
           where
