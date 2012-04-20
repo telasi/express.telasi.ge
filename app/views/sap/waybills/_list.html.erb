@@ -2,11 +2,12 @@
   <thead>
     <tr>
       <th width="16" class="center"><%= icon_text 'picture'%></th>
-      <th width="100">№, თარიღი</th>
-      <th width="200">საწყობი</th>
-      <th width="150">ზედნადების №</th>
-      <th width="150">თარიღები</th>
-      <th width="150">შენიშვნები</th>
+      <th width="90">№, თარიღი</th>
+      <th width="180">საწყობი</th>
+      <th width="180">ხარჯის ცენტრი</th>
+      <th width="110">ზედნადების №</th>
+      <th width="140">თარიღები</th>
+      <th>შენიშვნები</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +26,10 @@
             <%= doc.warehouse.name %><br/>
             <span class="muted"><strong><%= doc.warehouse.werks %></strong> <%= doc.warehouse.lgort %></span>
           <% end -%>
+       	</td>
+       	<td>
+       	  <%= doc.cost_center %><br>
+       	  <span class="muted"><%= doc.cost_center_name %></span>
        	</td>
        	<td class="right">
        	  <% if doc.rs_id -%>

@@ -22,7 +22,8 @@ module Sap
       field :rs_status, type: Integer, default: RS::Waybill::STATUS_SAVED
       field :rs_start,  type: Time
       field :rs_end,    type: Time
-      field :version,   type: String
+      field :cost_center,      type: String
+      field :cost_center_name, type: String
       belongs_to              :warehouse, :class_name => 'Sys::Warehouse'
       has_and_belongs_to_many :users,     :class_name => 'Sys::User'
 

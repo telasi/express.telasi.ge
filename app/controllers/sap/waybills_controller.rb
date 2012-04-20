@@ -51,6 +51,14 @@ module Sap
           warehouse = Sys::Warehouse.where(:werks => item.werks, :lgort => item.lgort).first
           doc.warehouse = warehouse
           doc.users = warehouse.users
+          # cost center
+          sap_warehouse = warehouse.sap_warehouse
+          sap_addresses = sap_warehouse.addresses if sap_warehouse
+          if sap_addresses and not sap_addresses.first.nil?
+            address = sap_addresses.first
+            doc.cost_center = address.address.floor
+            doc.cost_center_name = address.address.cost_center.ltext
+          end
           # save document
           doc.save!
         elsif doc
