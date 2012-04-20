@@ -48,7 +48,15 @@ module Sap
           where
         end
       end
-      
+
+      def self.by_warehouses(warehouses)
+        if warehouses and warehouses.any?
+          where(:warehouse_id => {'$in' => warehouses})
+        else
+          where
+        end
+      end
+
       def sap_doc
         Sap::MaterialDocument.where(:mblnr => self.mblnr, :mjahr => self.mjahr, :mandt => Express::Sap::MANDT).first
       end

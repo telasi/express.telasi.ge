@@ -14,12 +14,16 @@ module Sap
       @start_status  = get_status('start')
       @active_status = get_status('active')
       @closed_status = get_status('closed')
-      @stats = []
-      @stats << RS::Waybill::STATUS_SAVED  if @start_status
-      @stats << RS::Waybill::STATUS_ACTIVE if @active_status
-      @stats << RS::Waybill::STATUS_CLOSED if @closed_status
-      puts "STATUSES: #{@stats}" 
-      @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(@stats).asc(:mblnr)
+      stats = []
+      stats << RS::Waybill::STATUS_SAVED  if @start_status
+      stats << RS::Waybill::STATUS_ACTIVE if @active_status
+      stats << RS::Waybill::STATUS_CLOSED if @closed_status
+      @q = current_query
+      warehouses = Sys::Warehouse.by_query(@q).map{|w| w.id } if @q
+      @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(stats).by_warehouses(warehouses).asc(:mblnr)
+      if request.xhr?
+        render :partial => 'sap/waybills/list'
+      end
     end
 
     def sync
@@ -113,6 +117,10 @@ module Sap
     end
 
     private
+
+    def current_query
+      current_param('waybill', 'q')
+    end
 
     def current_date
       Date.strptime(current_param('waybill', 'date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
