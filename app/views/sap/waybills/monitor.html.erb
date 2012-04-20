@@ -23,7 +23,7 @@
   <div>
     <input id="start-date" type="text" class="datepicker span2" value="<%= @start_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საწყისი თარიღი">
     <input id="end-date" type="text" class="datepicker span2" value="<%= @end_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საბოლოო თარიღი">
-    <input id="search" type="text" class="span2" value="" rel="tooltip" data-original-title="საწყობი" autofocus placeholder="საწყობი...">
+    <input id="search" type="text" class="span2" value="<%= @q %>" rel="tooltip" data-original-title="საწყობი" autofocus placeholder="საწყობი...">
   </div>
 </div>
 <div id="result">
