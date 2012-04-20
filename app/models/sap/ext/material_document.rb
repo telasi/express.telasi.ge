@@ -29,6 +29,7 @@ module Sap
       belongs_to              :warehouse, :class_name => 'Sys::Warehouse'
       has_and_belongs_to_many :users,     :class_name => 'Sys::User'
 
+      index [[:cost_center, Mongo::ASCENDING], [:cost_center_name, Mongo::ASCENDING], [:lgort, Mongo::ASCENDING], [:werks, Mongo::ASCENDING]]
       index [[:mblnr, Mongo::ASCENDING], [:mjahr, Mongo::ASCENDING]]
       index :date
 
@@ -56,14 +57,6 @@ module Sap
         unless q.blank?
           array = q.split.map{ |w| { '$or' => [{:cost_center => /#{w}/i}, {:cost_center_name => /#{w}/i}, {:lgort => /#{w}/i}, {:werks => /#{w}/i}] } }
           where('$and' => array)
-        else
-          where
-        end
-      end
-
-      def self.by_warehouses(warehouses)
-        if warehouses
-          where(:warehouse_id => {'$in' => warehouses})
         else
           where
         end
