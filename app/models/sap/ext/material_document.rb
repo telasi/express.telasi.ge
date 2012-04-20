@@ -24,6 +24,8 @@ module Sap
       field :rs_end,    type: Time
       field :cost_center,      type: String
       field :cost_center_name, type: String
+      field :lgort, type: String
+      field :werks, type: String
       belongs_to              :warehouse, :class_name => 'Sys::Warehouse'
       has_and_belongs_to_many :users,     :class_name => 'Sys::User'
 
@@ -45,6 +47,15 @@ module Sap
       def self.by_status(stats)
         if stats and stats.any?
           where(:rs_status => {'$in' => stats})
+        else
+          where
+        end
+      end
+
+      def self.by_q(q)
+        unless q.blank?
+          array = q.split.map{ |w| { '$or' => [{:cost_center => /#{w}/i}, {:cost_center_name => /#{w}/i}, {:lgort => /#{w}/i}, {:werks => /#{w}/i}] } }
+          where('$and' => array)
         else
           where
         end

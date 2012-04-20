@@ -19,8 +19,7 @@ module Sap
       stats << RS::Waybill::STATUS_ACTIVE if @active_status
       stats << RS::Waybill::STATUS_CLOSED if @closed_status
       @q = current_query
-      warehouses = Sys::Warehouse.by_query(@q).map{|w| w.id } if @q
-      @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(stats).by_warehouses(warehouses).asc(:mblnr)
+      @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(stats).by_q(@q).asc(:mblnr)
       if request.xhr?
         render :partial => 'sap/waybills/list'
       end
@@ -49,6 +48,8 @@ module Sap
           # warehouse
           item = sap_doc.items.first
           warehouse = Sys::Warehouse.where(:werks => item.werks, :lgort => item.lgort).first
+          doc.werks = item.werks
+          doc.lgort = item.lgort
           doc.warehouse = warehouse
           doc.users = warehouse.users
           # cost center
