@@ -37,6 +37,18 @@ module Sap
         end
       end
 
+      def self.by_date_interval(d_start, d_end)
+        where(:date.gte => d_start, :date.lte => d_end)
+      end
+
+      def self.by_status(stats)
+        if stats and stats.any?
+          where(:rs_status => {'$in' => stats})
+        else
+          where
+        end
+      end
+      
       def sap_doc
         Sap::MaterialDocument.where(:mblnr => self.mblnr, :mjahr => self.mjahr, :mandt => Express::Sap::MANDT).first
       end

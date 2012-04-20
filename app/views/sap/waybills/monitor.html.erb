@@ -1,0 +1,27 @@
+<script type="text/javascript">
+  $(function() {
+    $('#start-date').change(function() {
+      var date = $('#start-date').val();
+      window.location = '<%= sap_monitor_url %>?start_date=' + date;
+    });
+    $('#end-date').change(function() {
+      var date = $('#end-date').val();
+      window.location = '<%= sap_monitor_url %>?end_date=' + date;
+    });
+  });
+</script>
+<div class="page-header">
+  <h2>ზედნადებების მონიტორინგი</h2>
+</div>
+<div class="well">
+  <div class="pull-right btn-group" data-toggle="buttons-checkbox">
+  	<%= link_to icon_text('map-marker', 'გადაუგზავნელი'), sap_monitor_url(:start_status => (not @start_status)), :class => ['btn', (@start_status ? 'active' : '')] %>
+  	<%= link_to icon_text('road', 'აქტივირებული'), sap_monitor_url(:active_status => (not @active_status)), :class => ['btn', (@active_status ? 'active' : '')] %>
+  	<%= link_to icon_text('ok-sign', 'დასრულებული'), sap_monitor_url(:closed_status => (not @closed_status)), :class => ['btn', (@closed_status ? 'active' : '')] %>
+  </div>
+  <div>
+    <input id="start-date" type="text" class="datepicker span2" value="<%= @start_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საწყისი თარიღი">
+    <input id="end-date" type="text" class="datepicker span2" value="<%= @end_date.strftime('%d-%b-%Y') %>" rel="tooltip" data-original-title="საბოლოო თარიღი">
+  </div>
+</div>
+<%= render :partial => 'sap/waybills/list' %>

@@ -7,6 +7,21 @@ module Sap
       @docs = Sap::Ext::MaterialDocument.by_user(current_user).where(:date => @date).asc(:mblnr)
     end
 
+    def monitor
+      @title = 'ზედნადებების მონიტორინგი'
+      @start_date = start_date
+      @end_date   = end_date
+      @start_status  = get_status('start')
+      @active_status = get_status('active')
+      @closed_status = get_status('closed')
+      @stats = []
+      @stats << RS::Waybill::STATUS_SAVED  if @start_status
+      @stats << RS::Waybill::STATUS_ACTIVE if @active_status
+      @stats << RS::Waybill::STATUS_CLOSED if @closed_status
+      puts "STATUSES: #{@stats}" 
+      @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(@stats).asc(:mblnr)
+    end
+
     def sync
       date = current_date
       sap_docs = Sap::MaterialDocument.where(:mandt => Express::Sap::MANDT, :budat => date.strftime('%Y%m%d'))
@@ -70,7 +85,7 @@ module Sap
       rescue Exception => ex
         msg = "ზედნადების შენახვის შეცდომა: #{ex.to_s}"
       end
-      redirect_to sap_show_waybill_url(doc), :notice => msg 
+      redirect_to sap_show_waybill_url(doc), :notice => msg
     end
 
     def sync_rs
@@ -96,11 +111,23 @@ module Sap
     def no_role?
       true
     end
-    
+
     private
 
     def current_date
       Date.strptime(current_param('waybill', 'date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+    end
+
+    def start_date
+      Date.strptime(current_param('waybill', 'start_date', (Date.today << 1).strftime(DATE_FORMAT)), DATE_FORMAT)
+    end
+
+    def end_date
+      Date.strptime(current_param('waybill', 'end_date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+    end
+
+    def get_status(status)
+      current_param('waybill', "#{status}_status", 'true') == 'true'
     end
   end
 end

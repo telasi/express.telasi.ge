@@ -17,7 +17,7 @@ module Sap
 
     def purchase?
       item = self.items.first
-      (item.ebeln[0..1] == '45' and item.bwart == '101') or item.bwart == '301'
+      (item.ebeln[0..1] == '45' and item.bwart == '101') #or item.bwart == '301'
     end
 
     def inner?
@@ -88,7 +88,7 @@ module Sap
         waybill.start_address = self.driver_info.addr_otp if self.driver_info
         waybill.end_address   = self.driver_info.addr_pol if self.driver_info
       end
-      if waybill.start_address.blank? and waybill.end_address.blank?
+      if waybill.start_address.blank? or waybill.end_address.blank?
         if self.return?
           address1 = not_auto.warehouse_address if not_auto
           address2 = auto.warehouse_address if auto

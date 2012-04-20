@@ -32,6 +32,7 @@ ExpressTelasiGe::Application.routes.draw do
       post '/sync_rs/:id',    :action => :sync_rs,    :as => :sync_rs 
       post '/cancel_rs/:id',  :action => :cancel_rs,  :as => :cancel_rs
       post '/close_rs/:id',   :action => :close_rs,   :as => :close_rs
+      get '/monitor',         :action => :monitor,    :as => :monitor
     end
   end
 

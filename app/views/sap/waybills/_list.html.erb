@@ -1,0 +1,51 @@
+<table class="table table-striped table-bordered waybills">
+  <thead>
+    <tr>
+      <th width="16" class="center"><%= icon_text 'picture'%></th>
+      <th width="100">№, თარიღი</th>
+      <th width="200">საწყობი</th>
+      <th width="150">ზედნადების №</th>
+      <th width="150">თარიღები</th>
+      <th width="150">შენიშვნები</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @docs.each do |doc| -%>
+      <tr class="<%= waybill_class(doc) %>">
+        <td class="center">
+          <%= icon_text(doc.type_icon, nil, :tooltip => doc.type_text) %><br/>
+          <%= icon_text(doc.rs_status_icon, nil, :tooltip => doc.rs_status_text) %>
+        </td>
+        <td>
+          <%= link_to doc.mblnr, sap_show_waybill_url(doc) %><br/>
+          <span class="muted"><%= doc.date.strftime('%d-%b-%Y') %></span>
+        </td>
+        <td>
+          <% if doc.warehouse -%>
+            <%= doc.warehouse.name %><br/>
+            <span class="muted"><strong><%= doc.warehouse.werks %></strong> <%= doc.warehouse.lgort %></span>
+          <% end -%>
+       	</td>
+       	<td class="right">
+       	  <% if doc.rs_id -%>
+       	    <span class="badge badge-success"><%= tooltiped_text doc.rs_number, 'ზედნადების ნომერი', :left %></span><br/>
+       	    <span class="muted"><%= tooltiped_text doc.rs_id, 'ზედნადების ID', :left %></span>
+       	  <% end %>
+       	</td>
+       	<td>
+       	  <% if doc.rs_start -%>
+       	    <%= icon_text 'road', doc.rs_start.strftime('%d-%b-%Y %H:%M'), :tooltip => 'აქტივაციის თარიღი' %><br/>
+       	  <% end -%>
+       	  <% if doc.rs_end -%>
+       	    <%= icon_text 'ok-sign', doc.rs_end.strftime('%d-%b-%Y %H:%M'), :tooltip => 'დასრულების თარიღი' %>
+       	  <% end -%>
+       	</td>
+       	<td>
+       	  <% if doc.storno %>
+       	    <span class="badge badge-warning">სტორნირებულია!</span>
+       	  <% end %>
+       	</td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
