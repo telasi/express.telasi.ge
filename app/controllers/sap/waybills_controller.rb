@@ -156,7 +156,7 @@ module Sap
     def to_xls(docs, file)
       book = Spreadsheet::Workbook.new
       sheet1 = book.create_worksheet
-      sheet1.name = 'ს/ზ'
+      sheet1.name = 'waybills'
       sheet1[0, 0] = 'დოკ. ნომერი'
       sheet1[0, 1] = 'RS სტატუსი'
       sheet1[0, 2] = 'გამოწერის თარიღი'
