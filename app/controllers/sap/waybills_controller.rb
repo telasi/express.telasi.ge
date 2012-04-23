@@ -195,8 +195,16 @@ module Sap
         sheet1[row, 11] = doc.rs_end.strftime('%d-%b-%Y %H:%M')   if doc.rs_end
         row += 1
       end
+      f1 = Spreadsheet::Format.new(:border => true, :weight => :bold, :size => 12)
+      f2 = Spreadsheet::Format.new(:border => true)
+      0.upto(docs.size) do |j|
+        if j == 0
+          0.upto(11) { |i| sheet1.row(j).set_format(i, f1) }
+        else
+          0.upto(11) { |i| sheet1.row(j).set_format(i, f2) }
+        end
+      end
       book.write file
     end
-
   end
 end
