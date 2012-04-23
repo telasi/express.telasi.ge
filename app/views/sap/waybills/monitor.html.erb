@@ -26,6 +26,9 @@
     <input id="search" type="text" class="span3" value="<%= @q %>" rel="tooltip" data-original-title="საწყობი ან ხარჯის მუხლი" autofocus placeholder="საწყობი ან ხარჯის მუხლი...">
   </div>
 </div>
+<div class="btn-toolbar">
+  <%= link_to icon_text('th', 'ექსპორტი ექსელში'), sap_monitor_url(:format => :xls), :class => :btn %>
+</div>
 <div id="result">
 	<%= render :partial => 'sap/waybills/list' %>
 </div>

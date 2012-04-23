@@ -8,7 +8,6 @@ module Sap
     end
 
     def monitor
-      @title = 'ზედნადებების მონიტორინგი'
       @start_date = start_date
       @end_date   = end_date
       @start_status  = get_status('start')
@@ -20,8 +19,15 @@ module Sap
       stats << RS::Waybill::STATUS_CLOSED if @closed_status
       @q = current_query
       @docs = Sap::Ext::MaterialDocument.by_user(current_user).by_date_interval(@start_date, @end_date).by_status(stats).by_q(@q).asc(:mblnr)
-      if request.xhr?
-        render :partial => 'sap/waybills/list'
+      respond_to do |format|
+        format.html do
+          @title = 'ზედნადებების მონიტორინგი'
+          render :partial => 'sap/waybills/list' if request.xhr?
+        end
+        format.xls do
+          to_xls(@docs, 'tmp/waybill.xls')
+          send_file 'tmp/waybill.xls', :type => :xls, :disposition => 'inline'
+        end
       end
     end
 
@@ -146,5 +152,51 @@ module Sap
     def get_status(status)
       current_param('waybill', "#{status}_status", 'true') == 'true'
     end
+
+    def to_xls(docs, file)
+      book = Spreadsheet::Workbook.new
+      sheet1 = book.create_worksheet
+      sheet1.name = 'ს/ზ'
+      sheet1[0, 0] = 'დოკ. ნომერი'
+      sheet1[0, 1] = 'RS სტატუსი'
+      sheet1[0, 2] = 'გამოწერის თარიღი'
+      sheet1[0, 3] = 'საწყობი'
+      sheet1[0, 4] = 'საწარმო'
+      sheet1[0, 5] = 'საწყობის დასახელება'
+      sheet1[0, 6] = 'ხარჯის ცენტრი'
+      sheet1[0, 7] = 'ხარჯის ცენტრი, დასახელება'
+      sheet1[0, 8] = 'ზედნადების ID'
+      sheet1[0, 9] = 'ზედნადების ნომერი'
+      sheet1[0, 10] = 'ზედნადების გაგზავნის თარიღი'
+      sheet1[0, 11] = 'ზედნადების დასრულების თარიღი'
+      row = 1
+      docs.each do |doc|
+        sheet1[row, 0] = doc.mblnr
+        if (doc.rs_sent? or doc.rs_closed?) and doc.storno
+          sheet1[row, 1] = 'სტორნირებული'
+        elsif doc.rs_sent?
+          sheet1[row, 1] = 'გაგზავნილი'
+        elsif doc.rs_closed?
+          sheet1[row, 1] = 'დასრულებული'
+        elsif doc.rs_canceled?
+          sheet1[row, 1] = 'გაუქმებული'
+        else
+          sheet1[row, 1] = 'გადაუგზავნელი'
+        end
+        sheet1[row, 2] = doc.date.strftime('%d-%b-%Y')
+        sheet1[row, 3] = doc.warehouse.lgort
+        sheet1[row, 4] = doc.warehouse.werks
+        sheet1[row, 5] = doc.warehouse.name
+        sheet1[row, 6] = doc.cost_center
+        sheet1[row, 7] = doc.cost_center_name
+        sheet1[row, 8] = doc.rs_id
+        sheet1[row, 9] = doc.rs_number
+        sheet1[row, 10] = doc.rs_start.strftime('%d-%b-%Y %H:%M') if doc.rs_start
+        sheet1[row, 11] = doc.rs_end.strftime('%d-%b-%Y %H:%M')   if doc.rs_end
+        row += 1
+      end
+      book.write file
+    end
+
   end
 end
