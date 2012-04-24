@@ -213,24 +213,25 @@ module Sap
         header = s.add_style :sz => 10, :b => true, :bg_color => '00', :fg_color => 'FF'
         row_first = s.add_style :sz => 10, :b => true, :border => {:style => :thin, :color => '00'}, :bg_color => 'FFCCCCCC'
         row = s.add_style :sz => 10, :border => {:style => :thin, :color => '00'}
-        wb.add_worksheet(:name => 'summary') do |sheet|
-          sheet.merge_cells("A1:C1")
-          sheet.add_row ['ზედნადების გადაგზავნის სტატუსი' ], :style => main_title
+        wb.add_worksheet(:name => 'waybill_report') do |sheet|
+          sheet.merge_cells("A1:L1")
+          sheet.add_row ['ზედნადების გადაგზავნის სტატუსი'], :style => main_title
           sheet.add_row
-          sheet.merge_cells("A3:C3")
+          sheet.merge_cells("A3:L3")
           sheet.add_row ['შემაჯამებელი მონაცემები'], :style => title
-          last_row = 2 + docs.size
-          sheet.add_row ['გადაუგზავნელი', "=COUNTIF(details!B3:B#{last_row}, A4)"]
-          sheet.add_row ['გაგზავნილი',    "=COUNTIF(details!B3:B#{last_row}, A5)"]
-          sheet.add_row ['დასრულებული',   "=COUNTIF(details!B3:B#{last_row}, A6)"]
-          sheet.add_row ['გაუქმებული',    "=COUNTIF(details!B3:B#{last_row}, A7)"]
-          sheet.add_row ['სტორნირებული',  "=COUNTIF(details!B3:B#{last_row}, A8)"]
+          last_row = 30 + docs.size
+          sheet.add_row ['გადაუგზავნელი', "=COUNTIF(B31:B#{last_row}, A4)"]
+          sheet.add_row ['გაგზავნილი',    "=COUNTIF(B31:B#{last_row}, A5)"]
+          sheet.add_row ['დასრულებული',   "=COUNTIF(B31:B#{last_row}, A6)"]
+          sheet.add_row ['გაუქმებული',    "=COUNTIF(B31:B#{last_row}, A7)"]
+          sheet.add_row ['სტორნირებული',  "=COUNTIF(B31:B#{last_row}, A8)"]
           sheet.add_chart(Axlsx::Pie3DChart, :start_at => [0,10], :end_at => [6, 30], :title => "სტატუსები") do |chart|
             chart.add_series :data => sheet["B4:B8"], :labels => sheet["A4:A8"]
           end
-        end
-        wb.add_worksheet(:name => 'details') do |sheet|
-          sheet.merge_cells("A1:L1")
+          9.upto(28) do |i|
+            sheet.add_row
+          end
+          sheet.merge_cells("A29:L29")
           sheet.add_row ['დეტალური მონაცემები'], :style => title
           sheet.add_row ['დოკ. ნომერი', 'RS სტატუსი', 'გამოწერის თარიღი',
             'საწყობი', 'საწარმო', 'საწყობის დასახელება',
