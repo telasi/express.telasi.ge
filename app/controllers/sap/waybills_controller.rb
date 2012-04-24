@@ -1,4 +1,7 @@
 # -*- encoding : utf-8 -*-
+require 'rs'
+require 'axlsx'
+
 module Sap
   class WaybillsController < SapController
     def index
@@ -27,6 +30,10 @@ module Sap
         format.xls do
           to_xls(@docs, 'tmp/waybill.xls')
           send_file 'tmp/waybill.xls', :type => :xls, :disposition => 'inline'
+        end
+        format.xlsx do
+          package = to_xlsx(@docs, 'tmp/waybill.xlsx')
+          send_file 'tmp/waybill.xlsx', :type => :xlsx, :disposition => 'inline'
         end
       end
     end
@@ -172,17 +179,7 @@ module Sap
       row = 1
       docs.each do |doc|
         sheet1[row, 0] = doc.mblnr
-        if (doc.rs_sent? or doc.rs_closed?) and doc.storno
-          sheet1[row, 1] = 'სტორნირებული'
-        elsif doc.rs_sent?
-          sheet1[row, 1] = 'გაგზავნილი'
-        elsif doc.rs_closed?
-          sheet1[row, 1] = 'დასრულებული'
-        elsif doc.rs_canceled?
-          sheet1[row, 1] = 'გაუქმებული'
-        else
-          sheet1[row, 1] = 'გადაუგზავნელი'
-        end
+        sheet1[row, 1] = rs_status(doc)
         sheet1[row, 2] = doc.date.strftime('%d-%b-%Y')
         sheet1[row, 3] = doc.warehouse.lgort
         sheet1[row, 4] = doc.warehouse.werks
@@ -206,5 +203,66 @@ module Sap
       end
       book.write file
     end
+
+    def to_xlsx(docs, file)
+      p = Axlsx::Package.new
+      wb = p.workbook
+      wb.styles do |s|
+        main_title = s.add_style :sz => 14, :b => true
+        title = s.add_style :sz => 12, :b => true, :bg_color => 'FFFF0000', :fg_color => 'FF'
+        header = s.add_style :sz => 10, :b => true, :bg_color => '00', :fg_color => 'FF'
+        row_first = s.add_style :sz => 10, :b => true, :border => {:style => :thin, :color => '00'}, :bg_color => 'FFCCCCCC'
+        row = s.add_style :sz => 10, :border => {:style => :thin, :color => '00'}
+        wb.add_worksheet(:name => 'waybill') do |sheet|
+          sheet.merge_cells("A1:L1")
+          sheet.add_row ['ზედნადების გადაგზავნის სტატუსი' ], :style => main_title
+          sheet.add_row
+          sheet.merge_cells("A3:L3")
+          sheet.add_row ['შემაჯამებელი მონაცემები'], :style => title
+          sheet.add_row ['გადაუგზავნელი', "=COUNTIF(B12:B#{12 + docs.size}, A4)"]
+          sheet.add_row ['გაგზავნილი', "=COUNTIF(B12:B#{12 + docs.size}, A5)"]
+          sheet.add_row ['დასრულებული', "=COUNTIF(B12:B#{12 + docs.size}, A6)"]
+          sheet.add_row ['გაუქმებული', "=COUNTIF(B12:B#{12 + docs.size}, A7)"]
+          sheet.add_row ['სტორნირებული', "=COUNTIF(B12:B#{12 + docs.size}, A8)"]
+#          sheet.add_chart(Axlsx::Pie3DChart, :start_at => [2,2], :end_at => [8, 15], :title => "სტატუსები") do |chart|
+#            chart.add_series :data => sheet["B4:B8"], :labels => sheet["A4:A8"]
+#          end
+          sheet.add_row
+          sheet.merge_cells("A10:L10")
+          sheet.add_row ['დეტალური მონაცემები'], :style => title
+          sheet.add_row ['დოკ. ნომერი', 'RS სტატუსი', 'გამოწერის თარიღი',
+            'საწყობი', 'საწარმო', 'საწყობის დასახელება',
+            'ხარჯის ცენტრი', 'ხარჯის ცენტრი, დასახელება',
+            'ზედნადების ID', 'ზედნადების ნომერი', 'ზედნადების გაგზავნის თარიღი', 'ზედნადების დასრულების თარიღი'],
+            :style => header
+          docs.each do |doc|
+            sheet.add_row [doc.mblnr, rs_status(doc), doc.date.strftime('%d-%b-%Y'),
+            doc.warehouse.lgort, doc.warehouse.werks, doc.warehouse.name,
+            doc.cost_center, doc.cost_center_name,
+            doc.rs_id ? doc.rs_id : '--', doc.rs_number ? doc.rs_number : '--',
+            doc.rs_start ? doc.rs_start.strftime('%d-%b-%Y %H:%M') : '--',
+            doc.rs_end ? doc.rs_end.strftime('%d-%b-%Y %H:%M') : '--'],
+            :style => [row_first, row]
+          end
+          sheet.column_widths 15
+        end
+      end
+      p.serialize file
+    end
+
+    def rs_status(doc)
+      if (doc.rs_sent? or doc.rs_closed?) and doc.storno
+        'სტორნირებული'
+      elsif doc.rs_sent?
+        'გაგზავნილი'
+      elsif doc.rs_closed?
+        'დასრულებული'
+      elsif doc.rs_canceled?
+        'გაუქმებული'
+      else
+        'გადაუგზავნელი'
+      end
+    end
+
   end
 end
