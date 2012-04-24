@@ -224,9 +224,9 @@ module Sap
           sheet.add_row ['დასრულებული', "=COUNTIF(B12:B#{12 + docs.size}, A6)"]
           sheet.add_row ['გაუქმებული', "=COUNTIF(B12:B#{12 + docs.size}, A7)"]
           sheet.add_row ['სტორნირებული', "=COUNTIF(B12:B#{12 + docs.size}, A8)"]
-#          sheet.add_chart(Axlsx::Pie3DChart, :start_at => [2,2], :end_at => [8, 15], :title => "სტატუსები") do |chart|
-#            chart.add_series :data => sheet["B4:B8"], :labels => sheet["A4:A8"]
-#          end
+          sheet.add_chart(Axlsx::Pie3DChart, :start_at => [2,2], :end_at => [8, 15], :title => "სტატუსები") do |chart|
+            chart.add_series :data => sheet["B4:B8"], :labels => sheet["A4:A8"]
+          end
           sheet.add_row
           sheet.merge_cells("A10:L10")
           sheet.add_row ['დეტალური მონაცემები'], :style => title
