@@ -6,6 +6,7 @@ module Sap
     class MaterialDocument
       include Mongoid::Document
       include Mongoid::Timestamps
+      include Telasi::Queryable
       
       TYPE_PURCHASE = 1
       TYPE_INNER    = 2
@@ -54,12 +55,7 @@ module Sap
       end
 
       def self.by_q(q)
-        unless q.blank?
-          array = q.split.map{ |w| { '$or' => [{:cost_center => /#{w}/i}, {:cost_center_name => /#{w}/i}, {:lgort => /#{w}/i}, {:werks => /#{w}/i}] } }
-          where('$and' => array)
-        else
-          where
-        end
+        search_by_q(q, :cost_center, :cost_center_name, :lgort, :werks)
       end
 
       def sap_doc

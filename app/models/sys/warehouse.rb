@@ -21,12 +21,7 @@ module Sys
 
     # ეძებს საწყობებს მოცემული ტექსტის მიხედვით.
     def self.by_query(q)
-      unless q.blank?
-        array = q.split.map{ |w| { '$or' => [{:name => /#{w}/i}, {:lgort => /#{w}/i}, {:werks => /#{w}/i}]} }
-        where('$and' => array)
-      else
-        where
-      end
+      search_by_q(q, :name, :lgort, :werks)
     end
   end
 end
