@@ -3,6 +3,8 @@ module Sys
   class Warehouse
     include Mongoid::Document
     include Mongoid::Timestamps
+    include Telasi::Queryable
+
     field :name, type: String
     field :werks, type: String
     field :lgort, type: String
