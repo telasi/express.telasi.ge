@@ -145,15 +145,27 @@ module Sap
     end
 
     def current_date
-      Date.strptime(current_param('waybill', 'date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+      begin
+        Date.strptime(current_param('waybill', 'date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+      rescue Exception
+        Date.today
+      end
     end
 
     def start_date
-      Date.strptime(current_param('waybill', 'start_date', (Date.today << 1).strftime(DATE_FORMAT)), DATE_FORMAT)
+      begin
+        Date.strptime(current_param('waybill', 'start_date', (Date.today << 1).strftime(DATE_FORMAT)), DATE_FORMAT)
+      rescue Exception
+        Date.today
+      end
     end
 
     def end_date
-      Date.strptime(current_param('waybill', 'end_date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+      begin
+        Date.strptime(current_param('waybill', 'end_date', Date.today.strftime(DATE_FORMAT)), DATE_FORMAT)
+      rescue Exception
+        Date.today
+      end
     end
 
     def get_status(status)
